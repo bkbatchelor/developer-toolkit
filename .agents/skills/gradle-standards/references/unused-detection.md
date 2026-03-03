@@ -151,7 +151,4 @@ done
 
 - [Cleanup Workflow](cleanup-workflow.md) - Full cleanup process
 - [Optimization](optimization.md) - Build optimization
-<!-- AUTO-GENERATED FILE - DO NOT EDIT DIRECTLY -->
-<!-- Source: bitsoex/ai-code-instructions → java/skills/gradle-standards/references/unused-detection.md -->
-<!-- To modify, edit the source file and run the distribution workflow -->
 

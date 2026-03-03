@@ -1472,9 +1472,5 @@ Example where force is NOT needed:
 ## Related
 
 - [Nebula Resolution Rules](https://github.com/nebula-plugins/gradle-resolution-rules-plugin) - Resolution rules for alignment and substitution
-- [Gradle 9 Upgrade](.claude/skills/gradle-9/SKILL.md) - Gradle 9 migration guide
 - [Gradle Official Docs](https://docs.gradle.org/current/userguide/dependency_locking.html) - Gradle dependency locking documentation
-<!-- AUTO-GENERATED FILE - DO NOT EDIT DIRECTLY -->
-<!-- Source: bitsoex/ai-code-instructions → java/skills/gradle-standards/references/native-dependency-locking.md -->
-<!-- To modify, edit the source file and run the distribution workflow -->
 

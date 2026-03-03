@@ -134,7 +134,4 @@ echo "Lockfiles: $lockfiles / Build files: $buildfiles"
 ```
 
 See [native-dependency-locking.md](native-dependency-locking.md#multi-module-projects) for complete multi-module locking guide.
-<!-- AUTO-GENERATED FILE - DO NOT EDIT DIRECTLY -->
-<!-- Source: bitsoex/ai-code-instructions → java/skills/gradle-standards/references/multi-module.md -->
-<!-- To modify, edit the source file and run the distribution workflow -->
 

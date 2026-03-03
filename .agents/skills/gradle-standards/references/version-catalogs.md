@@ -56,7 +56,4 @@ dependencies {
 3. **Explicit Dependencies**: Declare each dependency explicitly for visibility
 4. **Use Align Rules**: Use Nebula align rules for version consistency across module groups
 5. **Documentation**: Add comments for non-obvious dependencies
-<!-- AUTO-GENERATED FILE - DO NOT EDIT DIRECTLY -->
-<!-- Source: bitsoex/ai-code-instructions → java/skills/gradle-standards/references/version-catalogs.md -->
-<!-- To modify, edit the source file and run the distribution workflow -->
 

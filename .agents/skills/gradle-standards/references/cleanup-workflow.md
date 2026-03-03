@@ -147,7 +147,4 @@ cat gradle/libs.versions.toml | grep -E "^\[libraries\]" -A 1000 | \
 
 - [Unused Detection](unused-detection.md) - Finding unused dependencies
 - [Optimization](optimization.md) - Build optimization techniques
-<!-- AUTO-GENERATED FILE - DO NOT EDIT DIRECTLY -->
-<!-- Source: bitsoex/ai-code-instructions → java/skills/gradle-standards/references/cleanup-workflow.md -->
-<!-- To modify, edit the source file and run the distribution workflow -->
 

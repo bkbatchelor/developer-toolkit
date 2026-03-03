@@ -131,8 +131,7 @@ configurations.configureEach {
 
 ## Related Rules
 
-- [java-gradle-best-practices](.cursor/rules/java-gradle-best-practices/java-gradle-best-practices.mdc) - Full Gradle configuration reference
-- [java-versions-and-dependencies](.cursor/rules/java-versions-and-dependencies/java-versions-and-dependencies.mdc) - Version management policies
+Refer to the project's `conductor/code_styleguides/` for established standards.
 
 ## Dependency Resolution Stack
 
@@ -182,7 +181,4 @@ find . -name "build.gradle" | wc -l
 | `dependabot-security` | Security vulnerability fixes |
 | `java-coverage` | JaCoCo configuration in Gradle |
 | `java-testing` | Test configuration with Spock |
-<!-- AUTO-GENERATED FILE - DO NOT EDIT DIRECTLY -->
-<!-- Source: bitsoex/ai-code-instructions → java/skills/gradle-standards/SKILL.md -->
-<!-- To modify, edit the source file and run the distribution workflow -->
 

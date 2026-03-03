@@ -47,7 +47,4 @@ java.lang.NoSuchMethodError: 'redis.clients.jedis.params.SetParams...'
 ```
 
 See `java/golden-paths/redis-jedis-compatibility.md`
-<!-- AUTO-GENERATED FILE - DO NOT EDIT DIRECTLY -->
-<!-- Source: bitsoex/ai-code-instructions → java/skills/gradle-standards/references/troubleshooting.md -->
-<!-- To modify, edit the source file and run the distribution workflow -->
 

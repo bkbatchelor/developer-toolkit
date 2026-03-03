@@ -268,7 +268,4 @@ Refer to plugin documentation for compatible versions.
 - [Cleanup Workflow](cleanup-workflow.md) - Dependency cleanup
 - [Unused Detection](unused-detection.md) - Finding unused dependencies
 - [Version Catalogs](version-catalogs.md) - Catalog configuration
-<!-- AUTO-GENERATED FILE - DO NOT EDIT DIRECTLY -->
-<!-- Source: bitsoex/ai-code-instructions → java/skills/gradle-standards/references/optimization.md -->
-<!-- To modify, edit the source file and run the distribution workflow -->
 
