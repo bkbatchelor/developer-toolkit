@@ -1,0 +1,39 @@
+[versions]
+java = "21"
+spring-boot = "3.5.11"
+spring-dependency-management = "1.1.7"
+lombok = "1.18.36"
+junit-jupiter = "5.11.4"
+assertj = "3.27.3"
+testcontainers = "1.20.4"
+postgresql = "42.7.5"
+
+[libraries]
+# Core
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+
+# Testing
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
+assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
+
+# Spring Boot BOM (Bill of Materials) is usually preferred, but starters can be explicitly defined here too
+spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter", version.ref = "spring-boot" }
+spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "spring-boot" }
+spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation", version.ref = "spring-boot" }
+
+# Spring Data
+spring-boot-starter-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "spring-boot" }
+spring-boot-starter-data-mongodb = { module = "org.springframework.boot:spring-boot-starter-data-mongodb", version.ref = "spring-boot" }
+
+# Databases & Migrations
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+liquibase-core = { module = "org.liquibase:liquibase-core" } # Version managed by Spring Boot BOM usually
+
+# Testcontainers
+testcontainers-junit-jupiter = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers" }
+testcontainers-postgresql = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
+testcontainers-mongodb = { module = "org.testcontainers:mongodb", version.ref = "testcontainers" }
+
+[plugins]
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
