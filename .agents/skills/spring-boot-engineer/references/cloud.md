@@ -13,8 +13,8 @@ public class ConfigServerApplication {
 }
 ```
 
-```yaml
 // application.yml
+```yaml
 server:
   port: 8888
 
@@ -45,8 +45,8 @@ public class ClientApplication {
 }
 ```
 
-```yaml
 // application.yml (Config Client)
+```yaml
 spring:
   application:
     name: user-service
@@ -101,8 +101,8 @@ public class EurekaServerApplication {
 
 ```
 
-```yaml
 // application.yml (Eureka Server)
+```yaml
 server:
   port: 8761
 
@@ -127,8 +127,8 @@ public class UserServiceApplication {
 }
 ```
 
-```yaml
 // application.yml (Eureka Client)
+```yaml
 spring:
   application:
     name: user-service
@@ -200,8 +200,8 @@ public class GatewayApplication {
 }
 ```
 
-```yaml
 // application.yml (Gateway)
+```yaml
 spring:
   cloud:
     gateway:
@@ -250,8 +250,8 @@ public class ExternalApiService {
 }
 ```
 
-```yaml
 // application.yml
+```yaml
 resilience4j:
   circuitbreaker:
     instances:
@@ -283,8 +283,8 @@ resilience4j:
 
 ## Distributed Tracing - Micrometer Tracing
 
-```yaml
 // application.yml
+```yaml
 management:
   tracing:
     sampling:
@@ -392,9 +392,8 @@ public class CustomHealthIndicator implements HealthIndicator {
     }
 }
 ```
-
-```yaml
 // application.yml
+```yaml
 management:
   endpoints:
     web:

@@ -447,8 +447,8 @@ class UserReactiveControllerTest {
 
 ## Testing Configuration
 
-```yaml
 // application-test.yml
+```yaml
 spring:
   datasource:
     url: jdbc:h2:mem:testdb
