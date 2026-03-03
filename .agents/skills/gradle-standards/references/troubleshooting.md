@@ -36,7 +36,7 @@
 
 Often caused by version conflicts:
 
-```java
+```yaml
 java.lang.NoSuchMethodError: 'redis.clients.jedis.params.SetParams...'
 ```
 

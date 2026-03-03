@@ -45,7 +45,9 @@ const api = {
   getOrders: (userId) => fetch(`/users/${userId}/orders`),
   createOrder: (data) => fetch('/orders', { method: 'POST', body: data }),
 };
+```
 
+```typescript
 // BAD: Mocking requires conditional logic inside the mock
 const api = {
   fetch: (endpoint, options) => fetch(endpoint, options),

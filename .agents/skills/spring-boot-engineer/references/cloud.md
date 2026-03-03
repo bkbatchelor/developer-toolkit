@@ -11,7 +11,9 @@ public class ConfigServerApplication {
         SpringApplication.run(ConfigServerApplication.class, args);
     }
 }
+```
 
+```yaml
 // application.yml
 server:
   port: 8888
@@ -32,7 +34,8 @@ spring:
     user:
       name: config-user
       password: ${CONFIG_PASSWORD}
-
+```
+```java
 // Config Client
 @SpringBootApplication
 public class ClientApplication {
@@ -40,7 +43,9 @@ public class ClientApplication {
         SpringApplication.run(ClientApplication.class, args);
     }
 }
+```
 
+```yaml
 // application.yml (Config Client)
 spring:
   application:
@@ -94,6 +99,9 @@ public class EurekaServerApplication {
     }
 }
 
+```
+
+```yaml
 // application.yml (Eureka Server)
 server:
   port: 8761
@@ -106,7 +114,9 @@ eureka:
     fetch-registry: false
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+```
 
+```java
 // Eureka Client
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -115,7 +125,9 @@ public class UserServiceApplication {
         SpringApplication.run(UserServiceApplication.class, args);
     }
 }
+```
 
+```yaml
 // application.yml (Eureka Client)
 spring:
   application:
@@ -186,7 +198,9 @@ public class GatewayApplication {
         );
     }
 }
+```
 
+```yaml
 // application.yml (Gateway)
 spring:
   cloud:
@@ -234,7 +248,9 @@ public class ExternalApiService {
         return Mono.just(new ExternalData(id, "Fallback data", LocalDateTime.now()));
     }
 }
+```
 
+```yaml
 // application.yml
 resilience4j:
   circuitbreaker:
@@ -267,7 +283,7 @@ resilience4j:
 
 ## Distributed Tracing - Micrometer Tracing
 
-```java
+```yaml
 // application.yml
 management:
   tracing:
@@ -280,7 +296,9 @@ management:
 logging:
   pattern:
     level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+```
 
+```java
 // Custom spans
 @Service
 @RequiredArgsConstructor
@@ -373,7 +391,9 @@ public class CustomHealthIndicator implements HealthIndicator {
         return true;
     }
 }
+```
 
+```yaml
 // application.yml
 management:
   endpoints:

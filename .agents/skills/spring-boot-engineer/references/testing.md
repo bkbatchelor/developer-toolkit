@@ -447,7 +447,7 @@ class UserReactiveControllerTest {
 
 ## Testing Configuration
 
-```java
+```yaml
 // application-test.yml
 spring:
   datasource:
@@ -470,6 +470,9 @@ logging:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
+```
+
+```java
 // Test Configuration Class
 @TestConfiguration
 public class TestConfig {
