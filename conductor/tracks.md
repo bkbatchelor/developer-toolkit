@@ -5,3 +5,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 ---
 
 
+
+---
+
+- [ ] **Track: Create the Gradle scaffolding to support a monorepo**
+  *Link: [./tracks/gradle_scaffolding_20260303/](./tracks/gradle_scaffolding_20260303/)*
