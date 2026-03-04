@@ -32,7 +32,7 @@
     - [x] Update root `settings.gradle.kts` to include `persistence-nosql`.
 - [x] Task: Conductor - User Manual Verification 'Phase 3: Subproject Scaffolding' (Protocol in workflow.md)
 
-## Phase 4: Final Verification
+## Phase 4: Final Verification [checkpoint: 2d71844]
 
 - [x] Task: Execute `./gradlew clean build` to verify the multi-project setup compiles successfully and the configuration cache works as expected. c44ade9
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: Final Verification' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4: Final Verification' (Protocol in workflow.md)
