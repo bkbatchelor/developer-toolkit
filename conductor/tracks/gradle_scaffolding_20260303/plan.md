@@ -3,7 +3,7 @@
 ## Phase 1: Project Initialization and Version Catalog
 
 - [x] Task: Create the root `settings.gradle.kts` file to define the project name. d260d68
-- [~] Task: Create the `gradle/libs.versions.toml` file.
+- [x] Task: Create the `gradle/libs.versions.toml` file. d8937fa
     - [ ] Define versions for Java (21) and Spring Boot (3.5.x).
     - [ ] Define common libraries (Lombok, JUnit, AssertJ) and plugins (Spring Boot, dependency management).
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Project Initialization and Version Catalog' (Protocol in workflow.md)
