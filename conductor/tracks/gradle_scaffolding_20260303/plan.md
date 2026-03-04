@@ -8,13 +8,13 @@
     - [x] Define common libraries (Lombok, JUnit, AssertJ) and plugins (Spring Boot, dependency management).
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Project Initialization and Version Catalog' (Protocol in workflow.md)
 
-## Phase 2: Root Build Configuration
+## Phase 2: Root Build Configuration [checkpoint: 6a2a0c3]
 
 - [x] Task: Create the root `build.gradle.kts` file. d8f42cc
     - [x] Configure `allprojects` or `subprojects` block to apply the Java plugin, specify the Java toolchain (Java 21), and define common repositories (Maven Central).
     - [x] Apply common dependency management configurations leveraging the version catalog.
 - [x] Task: Create a basic `.gitignore` file suitable for a Gradle/Java project. adaf1d3
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Root Build Configuration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Root Build Configuration' (Protocol in workflow.md)
 
 ## Phase 3: Subproject Scaffolding
 
