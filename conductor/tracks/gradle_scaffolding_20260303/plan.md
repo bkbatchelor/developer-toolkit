@@ -22,11 +22,11 @@
     - [x] Create the directory structure `persistence-common-api/src/main/java`.
     - [x] Create the `persistence-common-api/build.gradle.kts` file.
     - [x] Update root `settings.gradle.kts` to include `persistence-common-api`.
-- [~] Task: Scaffolding `persistence-sql` module.
-    - [ ] Create the directory structure `persistence-sql/src/main/java`.
-    - [ ] Create the `persistence-sql/build.gradle.kts` file and configure it to depend on `persistence-common-api`.
-    - [ ] Update root `settings.gradle.kts` to include `persistence-sql`.
-- [ ] Task: Scaffolding `persistence-nosql` module.
+- [x] Task: Scaffolding `persistence-sql` module. fa0a94c
+    - [x] Create the directory structure `persistence-sql/src/main/java`.
+    - [x] Create the `persistence-sql/build.gradle.kts` file and configure it to depend on `persistence-common-api`.
+    - [x] Update root `settings.gradle.kts` to include `persistence-sql`.
+- [~] Task: Scaffolding `persistence-nosql` module.
     - [ ] Create the directory structure `persistence-nosql/src/main/java`.
     - [ ] Create the `persistence-nosql/build.gradle.kts` file and configure it to depend on `persistence-common-api`.
     - [ ] Update root `settings.gradle.kts` to include `persistence-nosql`.
