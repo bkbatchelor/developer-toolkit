@@ -4,6 +4,7 @@ dependencies {
     implementation(libs.postgresql)
     implementation(libs.liquibase.core)
     
+    testImplementation(libs.spring.boot.starter.test)
     testImplementation(libs.testcontainers.junit.jupiter)
     testImplementation(libs.testcontainers.postgresql)
 }
