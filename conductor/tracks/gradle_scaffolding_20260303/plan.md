@@ -10,7 +10,7 @@
 
 ## Phase 2: Root Build Configuration
 
-- [ ] Task: Create the root `build.gradle.kts` file.
+- [~] Task: Create the root `build.gradle.kts` file.
     - [ ] Configure `allprojects` or `subprojects` block to apply the Java plugin, specify the Java toolchain (Java 21), and define common repositories (Maven Central).
     - [ ] Apply common dependency management configurations leveraging the version catalog.
 - [ ] Task: Create a basic `.gitignore` file suitable for a Gradle/Java project.
