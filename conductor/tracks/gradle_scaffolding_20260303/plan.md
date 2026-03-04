@@ -16,7 +16,7 @@
 - [x] Task: Create a basic `.gitignore` file suitable for a Gradle/Java project. adaf1d3
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Root Build Configuration' (Protocol in workflow.md)
 
-## Phase 3: Subproject Scaffolding
+## Phase 3: Subproject Scaffolding [checkpoint: 30106b8]
 
 - [x] Task: Scaffolding `persistence-common-api` module. 80e3beb
     - [x] Create the directory structure `persistence-common-api/src/main/java`.
@@ -30,7 +30,7 @@
     - [x] Create the directory structure `persistence-nosql/src/main/java`.
     - [x] Create the `persistence-nosql/build.gradle.kts` file and configure it to depend on `persistence-common-api`.
     - [x] Update root `settings.gradle.kts` to include `persistence-nosql`.
-- [~] Task: Conductor - User Manual Verification 'Phase 3: Subproject Scaffolding' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Subproject Scaffolding' (Protocol in workflow.md)
 
 ## Phase 4: Final Verification
 
