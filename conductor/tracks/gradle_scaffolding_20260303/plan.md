@@ -18,7 +18,7 @@
 
 ## Phase 3: Subproject Scaffolding
 
-- [ ] Task: Scaffolding `persistence-common-api` module.
+- [~] Task: Scaffolding `persistence-common-api` module.
     - [ ] Create the directory structure `persistence-common-api/src/main/java`.
     - [ ] Create the `persistence-common-api/build.gradle.kts` file.
     - [ ] Update root `settings.gradle.kts` to include `persistence-common-api`.
