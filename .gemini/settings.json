@@ -18,5 +18,8 @@
         "/home/bkbatchelor/Projects/developer-toolkit"
       ]
     }
+  },
+  "general": {
+    "previewFeatures": true
   }
 }

@@ -26,11 +26,11 @@
     - [x] Create the directory structure `persistence-sql/src/main/java`.
     - [x] Create the `persistence-sql/build.gradle.kts` file and configure it to depend on `persistence-common-api`.
     - [x] Update root `settings.gradle.kts` to include `persistence-sql`.
-- [~] Task: Scaffolding `persistence-nosql` module.
-    - [ ] Create the directory structure `persistence-nosql/src/main/java`.
-    - [ ] Create the `persistence-nosql/build.gradle.kts` file and configure it to depend on `persistence-common-api`.
-    - [ ] Update root `settings.gradle.kts` to include `persistence-nosql`.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Subproject Scaffolding' (Protocol in workflow.md)
+- [x] Task: Scaffolding `persistence-nosql` module. 9fff03e
+    - [x] Create the directory structure `persistence-nosql/src/main/java`.
+    - [x] Create the `persistence-nosql/build.gradle.kts` file and configure it to depend on `persistence-common-api`.
+    - [x] Update root `settings.gradle.kts` to include `persistence-nosql`.
+- [~] Task: Conductor - User Manual Verification 'Phase 3: Subproject Scaffolding' (Protocol in workflow.md)
 
 ## Phase 4: Final Verification
 

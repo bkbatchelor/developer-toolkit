@@ -1,7 +1,7 @@
 plugins {
     // Apply the Spring Boot and Dependency Management plugins at the root
     alias(libs.plugins.spring.boot) apply false
-    alias(libs.plugins.spring.dependency-management) apply false
+    alias(libs.plugins.spring.dependency.management) apply false
     java
 }
 
@@ -14,17 +14,23 @@ allprojects {
     }
 }
 
+// Capture the version catalog to make it accessible in subprojects block
+val versionCatalog = libs
+
 subprojects {
     apply(plugin = "java")
     apply(plugin = "io.spring.dependency-management")
+    apply(plugin = "org.springframework.boot")
 
     java {
         toolchain {
-            languageVersion.set(JavaLanguageVersion.of(libs.versions.java.get()))
+            languageVersion.set(JavaLanguageVersion.of(versionCatalog.versions.java.get()))
         }
     }
 
-    dependencyManagement {
+    // Configure dependency management for Spring Boot BOM
+    apply(plugin = "io.spring.dependency-management")
+    configure<io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension> {
         imports {
             mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
         }
@@ -32,10 +38,10 @@ subprojects {
 
     dependencies {
         // Common dependencies for all subprojects
-        compileOnly(libs.lombok)
-        annotationProcessor(libs.lombok)
+        compileOnly(versionCatalog.lombok)
+        annotationProcessor(versionCatalog.lombok)
         
-        testImplementation(libs.spring.boot.starter.test)
+        testImplementation(versionCatalog.spring.boot.starter.test)
         testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     }
 
