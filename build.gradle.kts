@@ -1,0 +1,45 @@
+plugins {
+    // Apply the Spring Boot and Dependency Management plugins at the root
+    alias(libs.plugins.spring.boot) apply false
+    alias(libs.plugins.spring.dependency-management) apply false
+    java
+}
+
+allprojects {
+    group = "com.developer.toolkit"
+    version = "0.0.1-SNAPSHOT"
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply(plugin = "java")
+    apply(plugin = "io.spring.dependency-management")
+
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(libs.versions.java.get()))
+        }
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+        }
+    }
+
+    dependencies {
+        // Common dependencies for all subprojects
+        compileOnly(libs.lombok)
+        annotationProcessor(libs.lombok)
+        
+        testImplementation(libs.spring.boot.starter.test)
+        testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
+}
