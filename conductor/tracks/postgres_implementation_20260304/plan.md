@@ -9,9 +9,9 @@
 - [x] Task: Implement `Category` entity. 29032cd
     - [x] Write failing unit test for `Category` mapping.
     - [x] Implement `Category` entity with standard JPA annotations.
-- [~] Task: Implement `Supplier` entity.
-    - [ ] Write failing unit test for `Supplier` mapping.
-    - [ ] Implement `Supplier` entity with standard JPA annotations.
+- [x] Task: Implement `Supplier` entity. d86a56a
+    - [x] Write failing unit test for `Supplier` mapping.
+    - [x] Implement `Supplier` entity with standard JPA annotations.
 - [ ] Task: Implement `Product` entity.
     - [ ] Write failing unit test for `Product` mapping and relationships (Category, Supplier).
     - [ ] Implement `Product` entity with JPA annotations and proper relationship mapping.
