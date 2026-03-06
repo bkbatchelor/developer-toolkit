@@ -18,14 +18,12 @@ To equip developers with a comparative understanding of SQL vs. NoSQL architectu
 - **Gradle Multi-Project Setup:** Centralized versioning via `libs.versions.toml`.
 - **SQL Module:** PostgreSQL implementation using JPA/Hibernate and Liquibase.
 - **NoSQL Module:** MongoDB implementation using Spring Data MongoDB.
-- **Common API:** Shared DTOs and interfaces to ensure API consistency, utilizing **Lombok** for reduced boilerplate.
 - **Testing Suite:** Integration tests using **Testcontainers** for both database implementations.
 - **Validation:** Implementation of **Jakarta Bean Validation (Standard Annotations)** at the API layer.
 
 ## Core Architecture
 - `persistence-sql/`: JPA entities, repositories, and Liquibase change-logs.
 - `persistence-nosql/`: MongoDB documents and repositories.
-- `common-api/`: Shared DTOs (Data Transfer Objects) and interfaces.
 
 ## Deployment & CI/CD
 - **Continuous Integration:** **GitHub Actions** will be used for automated build and test verification.
