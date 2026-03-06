@@ -35,9 +35,9 @@
     - [x] Implement the controller mapping, service logic (if needed), and DTO mapping.
 - [x] Task: Conductor - User Manual Verification 'Phase 3: API Layer' (Protocol in workflow.md) c29c9e1
 
-## Phase 4: Final Integration & Verification
+## Phase 4: Final Integration & Verification [checkpoint: 098de98]
 
-- [ ] Task: Perform end-to-end verification using Testcontainers.
-    - [ ] Ensure all migrations run successfully on a real PostgreSQL container.
-    - [ ] Verify full CRUD and search operations via API.
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: Final Integration & Verification' (Protocol in workflow.md)
+- [x] Task: Perform end-to-end verification using Testcontainers. 098de98
+    - [x] Ensure all migrations run successfully on a real PostgreSQL container.
+    - [x] Verify full CRUD and search operations via API.
+- [x] Task: Conductor - User Manual Verification 'Phase 4: Final Integration & Verification' (Protocol in workflow.md) 098de98

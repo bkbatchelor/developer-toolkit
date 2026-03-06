@@ -19,6 +19,7 @@ assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
 # Spring Boot BOM (Bill of Materials) is usually preferred, but starters can be explicitly defined here too
 spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter", version.ref = "spring-boot" }
 spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "spring-boot" }
+spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring-boot" }
 spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation", version.ref = "spring-boot" }
 
 # Spring Data
