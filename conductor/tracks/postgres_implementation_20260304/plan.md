@@ -12,9 +12,9 @@
 - [x] Task: Implement `Supplier` entity. d86a56a
     - [x] Write failing unit test for `Supplier` mapping.
     - [x] Implement `Supplier` entity with standard JPA annotations.
-- [~] Task: Implement `Product` entity.
-    - [ ] Write failing unit test for `Product` mapping and relationships (Category, Supplier).
-    - [ ] Implement `Product` entity with JPA annotations and proper relationship mapping.
+- [x] Task: Implement `Product` entity. 9053dbd
+    - [x] Write failing unit test for `Product` mapping and relationships (Category, Supplier).
+    - [x] Implement `Product` entity with JPA annotations and proper relationship mapping.
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Database Infrastructure & Entities' (Protocol in workflow.md)
 
 ## Phase 2: Persistence Layer & Queries
