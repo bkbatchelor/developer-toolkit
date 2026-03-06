@@ -9,7 +9,7 @@
 - [x] Task: Implement `Category` entity. 29032cd
     - [x] Write failing unit test for `Category` mapping.
     - [x] Implement `Category` entity with standard JPA annotations.
-- [ ] Task: Implement `Supplier` entity.
+- [~] Task: Implement `Supplier` entity.
     - [ ] Write failing unit test for `Supplier` mapping.
     - [ ] Implement `Supplier` entity with standard JPA annotations.
 - [ ] Task: Implement `Product` entity.
