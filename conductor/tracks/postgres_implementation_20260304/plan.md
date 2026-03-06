@@ -1,6 +1,6 @@
 # Implementation Plan: PostgreSQL Implementation (SQL Module)
 
-## Phase 1: Database Infrastructure & Entities
+## Phase 1: Database Infrastructure & Entities [checkpoint: 65dce13]
 
 - [x] Task: Configure PostgreSQL 18+ connection properties in `persistence-sql/src/main/resources/application.yml`. e5e2750
 - [x] Task: Set up Liquibase in `persistence-sql/`. ee3ccc3
@@ -15,7 +15,7 @@
 - [x] Task: Implement `Product` entity. 9053dbd
     - [x] Write failing unit test for `Product` mapping and relationships (Category, Supplier).
     - [x] Implement `Product` entity with JPA annotations and proper relationship mapping.
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Database Infrastructure & Entities' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Database Infrastructure & Entities' (Protocol in workflow.md) 65dce13
 
 ## Phase 2: Persistence Layer & Queries
 
