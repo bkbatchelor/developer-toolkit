@@ -19,11 +19,11 @@
 
 ## Phase 2: Persistence Layer & Queries
 
-- [ ] Task: Create Spring Data JPA Repositories.
-    - [ ] Create `CategoryRepository`, `SupplierRepository`, and `ProductRepository`.
-- [ ] Task: Implement Product Search Queries using JPQL.
-    - [ ] Write failing integration tests for complex product searching (name, category, price range, stock).
-    - [ ] Define `@Query` methods in `ProductRepository` using JPQL to satisfy the search requirements.
+- [x] Task: Create Spring Data JPA Repositories. 4c600f6
+    - [x] Create `CategoryRepository`, `SupplierRepository`, and `ProductRepository`.
+- [x] Task: Implement Product Search Queries using JPQL. 4c600f6
+    - [x] Write failing integration tests for complex product searching (name, category, price range, stock).
+    - [x] Define `@Query` methods in `ProductRepository` using JPQL to satisfy the search requirements.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Persistence Layer & Queries' (Protocol in workflow.md)
 
 ## Phase 3: API Layer
