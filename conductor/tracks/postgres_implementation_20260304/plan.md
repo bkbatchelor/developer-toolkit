@@ -3,9 +3,9 @@
 ## Phase 1: Database Infrastructure & Entities
 
 - [x] Task: Configure PostgreSQL 18+ connection properties in `persistence-sql/src/main/resources/application.yml`. e5e2750
-- [~] Task: Set up Liquibase in `persistence-sql/`.
-    - [ ] Create `db/changelog/db.changelog-master.xml`.
-    - [ ] Create initial migration for `category`, `supplier`, and `product` tables with primary keys, foreign keys, and indexes.
+- [x] Task: Set up Liquibase in `persistence-sql/`. ee3ccc3
+    - [x] Create `db/changelog/db.changelog-master.xml`.
+    - [x] Create initial migration for `category`, `supplier`, and `product` tables with primary keys, foreign keys, and indexes.
 - [ ] Task: Implement `Category` entity.
     - [ ] Write failing unit test for `Category` mapping.
     - [ ] Implement `Category` entity with standard JPA annotations.
