@@ -7,7 +7,10 @@ import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = TestApplication.class)
+@SpringBootTest(classes = TestApplication.class, properties = {
+    "spring.liquibase.enabled=false",
+    "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration"
+})
 @ActiveProfiles("test")
 public class DatabasePropertiesTest {
 
