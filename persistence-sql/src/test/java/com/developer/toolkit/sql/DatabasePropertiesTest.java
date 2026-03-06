@@ -7,12 +7,17 @@ import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = TestApplication.class, properties = {
+import org.springframework.context.annotation.Configuration;
+
+@SpringBootTest(classes = DatabasePropertiesTest.Config.class, properties = {
     "spring.liquibase.enabled=false",
     "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration"
 })
 @ActiveProfiles("test")
 public class DatabasePropertiesTest {
+
+    @Configuration
+    static class Config {}
 
     @Value("${spring.datasource.url:#{null}}")
     private String datasourceUrl;
