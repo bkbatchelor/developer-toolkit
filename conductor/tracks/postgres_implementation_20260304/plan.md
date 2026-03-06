@@ -17,14 +17,14 @@
     - [x] Implement `Product` entity with JPA annotations and proper relationship mapping.
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Database Infrastructure & Entities' (Protocol in workflow.md) 65dce13
 
-## Phase 2: Persistence Layer & Queries
+## Phase 2: Persistence Layer & Queries [checkpoint: 30a2f79]
 
 - [x] Task: Create Spring Data JPA Repositories. 4c600f6
     - [x] Create `CategoryRepository`, `SupplierRepository`, and `ProductRepository`.
 - [x] Task: Implement Product Search Queries using JPQL. 4c600f6
     - [x] Write failing integration tests for complex product searching (name, category, price range, stock).
     - [x] Define `@Query` methods in `ProductRepository` using JPQL to satisfy the search requirements.
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Persistence Layer & Queries' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Persistence Layer & Queries' (Protocol in workflow.md) 30a2f79
 
 ## Phase 3: API Layer
 
