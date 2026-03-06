@@ -6,9 +6,9 @@
 - [x] Task: Set up Liquibase in `persistence-sql/`. ee3ccc3
     - [x] Create `db/changelog/db.changelog-master.xml`.
     - [x] Create initial migration for `category`, `supplier`, and `product` tables with primary keys, foreign keys, and indexes.
-- [~] Task: Implement `Category` entity.
-    - [ ] Write failing unit test for `Category` mapping.
-    - [ ] Implement `Category` entity with standard JPA annotations.
+- [x] Task: Implement `Category` entity. 29032cd
+    - [x] Write failing unit test for `Category` mapping.
+    - [x] Implement `Category` entity with standard JPA annotations.
 - [ ] Task: Implement `Supplier` entity.
     - [ ] Write failing unit test for `Supplier` mapping.
     - [ ] Implement `Supplier` entity with standard JPA annotations.
