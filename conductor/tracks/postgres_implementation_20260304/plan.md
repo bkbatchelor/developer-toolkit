@@ -26,14 +26,14 @@
     - [x] Define `@Query` methods in `ProductRepository` using JPQL to satisfy the search requirements.
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Persistence Layer & Queries' (Protocol in workflow.md) 30a2f79
 
-## Phase 3: API Layer
+## Phase 3: API Layer [checkpoint: c29c9e1]
 
-- [ ] Task: Define Data Transfer Objects (DTOs) for Product projections.
-    - [ ] Create `ProductResponseDTO` to include category and supplier names.
-- [ ] Task: Implement `ProductController`.
-    - [ ] Write failing integration tests for `GET /api/v1/sql/products` with various filter parameters.
-    - [ ] Implement the controller mapping, service logic (if needed), and DTO mapping.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: API Layer' (Protocol in workflow.md)
+- [x] Task: Define Data Transfer Objects (DTOs) for Product projections. f5c58a0
+    - [x] Create `ProductResponseDTO` to include category and supplier names.
+- [x] Task: Implement `ProductController`. 4b52282
+    - [x] Write failing integration tests for `GET /api/v1/sql/products` with various filter parameters.
+    - [x] Implement the controller mapping, service logic (if needed), and DTO mapping.
+- [x] Task: Conductor - User Manual Verification 'Phase 3: API Layer' (Protocol in workflow.md) c29c9e1
 
 ## Phase 4: Final Integration & Verification
 
