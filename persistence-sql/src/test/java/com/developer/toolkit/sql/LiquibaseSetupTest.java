@@ -16,11 +16,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = TestApplication.class)
 @ActiveProfiles("test")
-@Testcontainers
 public class LiquibaseSetupTest {
 
-    @Container
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine");
+
+    static {
+        postgres.start();
+    }
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
