@@ -1,4 +1,8 @@
 dependencies {
+    implementation(platform(libs.mongock.bom))
+    implementation(libs.mongock.springboot.v3)
+    implementation(libs.mongock.mongodb.springdata.v4.driver)
+
     implementation(libs.spring.boot.starter.data.mongodb)
     
     testImplementation(libs.testcontainers.junit.jupiter)

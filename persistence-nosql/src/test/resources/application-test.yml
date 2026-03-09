@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      database: testdb
+mongock:
+  migration-scan-package:
+    - com.developer.toolkit.nosql.changelog

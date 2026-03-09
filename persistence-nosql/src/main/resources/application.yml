@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      database: appdb
+      uri: mongodb://localhost:27017/appdb
+
+mongock:
+  migration-scan-package:
+    - com.developer.toolkit.nosql.changelog

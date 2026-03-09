@@ -7,6 +7,7 @@ junit-jupiter = "5.11.4"
 assertj = "3.27.3"
 testcontainers = "1.20.4"
 postgresql = "42.7.5"
+mongock = "5.5.1"
 
 [libraries]
 # Core
@@ -29,6 +30,9 @@ spring-boot-starter-data-mongodb = { module = "org.springframework.boot:spring-b
 # Databases & Migrations
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 liquibase-core = { module = "org.liquibase:liquibase-core" } # Version managed by Spring Boot BOM usually
+mongock-bom = { module = "io.mongock:mongock-bom", version.ref = "mongock" }
+mongock-springboot-v3 = { module = "io.mongock:mongock-springboot-v3" }
+mongock-mongodb-springdata-v4-driver = { module = "io.mongock:mongodb-springdata-v4-driver" }
 
 # Testcontainers
 testcontainers-junit-jupiter = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers" }

@@ -1,9 +1,9 @@
 # Implementation Plan: MongoDB Implementation (NoSQL Module)
 
 ## Phase 1: Environment and Infrastructure
-- [ ] Task: Configure Spring Data MongoDB and Testcontainers dependencies.
-- [ ] Task: Set up `BaseIntegrationTest` for MongoDB Testcontainers.
-- [ ] Task: Configure Mongock for database migrations.
+- [x] Task: Configure Spring Data MongoDB and Testcontainers dependencies.
+- [x] Task: Set up `BaseIntegrationTest` for MongoDB Testcontainers.
+- [x] Task: Configure Mongock for database migrations.
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Environment and Infrastructure' (Protocol in workflow.md)
 
 ## Phase 2: Domain Modeling & Repositories

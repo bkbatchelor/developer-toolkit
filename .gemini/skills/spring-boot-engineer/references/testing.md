@@ -1,4 +1,4 @@
-# Testing - Spring Boot Test
+# git-commitTesting - Spring Boot Test
 
 ## Unit Testing with JUnit 5
 
@@ -448,6 +448,7 @@ class UserReactiveControllerTest {
 ## Testing Configuration
 
 // application-test.yml
+
 ```yaml
 spring:
   datasource:
@@ -523,16 +524,17 @@ public class TestDataFactory {
 
 ## Quick Reference
 
-| Annotation | Purpose |
-|------------|---------|
-| `@SpringBootTest` | Full application context integration test |
-| `@WebMvcTest` | Test MVC controllers with mocked services |
-| `@WebFluxTest` | Test reactive controllers |
-| `@DataJpaTest` | Test JPA repositories with in-memory database |
-| `@MockBean` | Add mock bean to Spring context |
-| `@WithMockUser` | Mock authenticated user for security tests |
-| `@Testcontainers` | Enable Testcontainers support |
-| `@ActiveProfiles` | Activate specific Spring profiles for test |
+
+| Annotation        | Purpose                                       |
+| ----------------- | --------------------------------------------- |
+| `@SpringBootTest` | Full application context integration test     |
+| `@WebMvcTest`     | Test MVC controllers with mocked services     |
+| `@WebFluxTest`    | Test reactive controllers                     |
+| `@DataJpaTest`    | Test JPA repositories with in-memory database |
+| `@MockBean`       | Add mock bean to Spring context               |
+| `@WithMockUser`   | Mock authenticated user for security tests    |
+| `@Testcontainers` | Enable Testcontainers support                 |
+| `@ActiveProfiles` | Activate specific Spring profiles for test    |
 
 ## Testing Best Practices
 

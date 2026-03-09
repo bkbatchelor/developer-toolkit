@@ -1,5 +1,5 @@
 ---
-name: spring-boot-readme-generator
+name: java-spring-boot-readme-generator
 description: Analyzes Java Spring Boot and Gradle source code to generate or update professional README.md files. Use this skill whenever a user needs to 'document the project', 'scan for readme info', or 'generate a setup guide' for any Java repository. It specializes in extracting tech stacks, API endpoints, and test details from local files. Do NOT use for general Java coding, debugging, or project bootstrapping.
 ---
 
