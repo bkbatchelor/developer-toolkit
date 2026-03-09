@@ -1,3 +1,7 @@
+plugins {
+    alias(libs.plugins.spring.boot)
+}
+
 dependencies {
     implementation(platform(libs.mongock.bom))
     implementation(libs.mongock.springboot.v3)
