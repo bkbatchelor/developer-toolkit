@@ -13,11 +13,11 @@
 - [x] Task: Create Mongock changelog for initial database schema/indexes and seed data.
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Domain Modeling & Repositories' (Protocol in workflow.md)
 
-## Phase 3: Service Layer and Advanced Search
+## Phase 3: Service Layer and Advanced Search [checkpoint: 5ac9901]
 - [x] Task: Write failing tests for `ProductService` search logic and `MongoTemplate`-based queries.
 - [x] Task: Implement `ProductService` with search logic using `MongoTemplate` to pass tests.
 - [x] Task: Ensure search logic handles pagination and sorting effectively.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Service Layer and Advanced Search' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Service Layer and Advanced Search' (Protocol in workflow.md)
 
 ## Phase 4: API Layer and Final Integration
 - [ ] Task: Create `ProductResponseDTO` to map basic details and embedded attributes.
