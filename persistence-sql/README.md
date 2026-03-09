@@ -2,6 +2,9 @@
 
 > A Spring Boot module that implements a product catalog service using PostgreSQL, Spring Data JPA, and Liquibase for database migrations.
 
+## Documentation
+* [SQL and NoSQL Architectural Comparison](../docs/sql_and_nosql_architectural_comparison.md)
+
 ## Tech Stack
 *   Java 21
 *   Spring Boot 3.5.11

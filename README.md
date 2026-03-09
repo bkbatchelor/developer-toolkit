@@ -2,6 +2,9 @@
 
 > The Developer Toolkit is a monorepo designed to provide a comparative analysis of SQL (PostgreSQL) and NoSQL (MongoDB) database architectures within a modern Java and Spring Boot ecosystem. It serves as a practical guide and boilerplate for understanding the trade-offs and benefits of each approach.
 
+## Documentation
+* [SQL and NoSQL Architectural Comparison](docs/sql_and_nosql_architectural_comparison.md)
+
 ## Tech Stack
 *   **Java** 21
 *   **Spring Boot** 3.5.11
