@@ -4,6 +4,7 @@ dependencies {
     implementation(libs.mongock.mongodb.springdata.v4.driver)
 
     implementation(libs.spring.boot.starter.data.mongodb)
+    implementation(libs.spring.boot.starter.web)
     
     testImplementation(libs.testcontainers.junit.jupiter)
     testImplementation(libs.testcontainers.mongodb)

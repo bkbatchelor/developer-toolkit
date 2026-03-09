@@ -20,8 +20,8 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 3: Service Layer and Advanced Search' (Protocol in workflow.md)
 
 ## Phase 4: API Layer and Final Integration
-- [ ] Task: Create `ProductResponseDTO` to map basic details and embedded attributes.
-- [ ] Task: Write failing tests for `ProductController` endpoint `/api/v1/nosql/products`.
-- [ ] Task: Implement `ProductController` with support for paginated and sorted responses to pass tests.
-- [ ] Task: Perform end-to-end integration testing using Testcontainers.
+- [x] Task: Create `ProductResponseDTO` to map basic details and embedded attributes.
+- [x] Task: Write failing tests for `ProductController` endpoint `/api/v1/nosql/products`.
+- [x] Task: Implement `ProductController` with support for paginated and sorted responses to pass tests.
+- [~] Task: Perform end-to-end integration testing using Testcontainers.
 - [ ] Task: Conductor - User Manual Verification 'Phase 4: API Layer and Final Integration' (Protocol in workflow.md)
