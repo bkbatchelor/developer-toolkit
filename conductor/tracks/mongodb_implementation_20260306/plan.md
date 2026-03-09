@@ -7,10 +7,10 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Environment and Infrastructure' (Protocol in workflow.md)
 
 ## Phase 2: Domain Modeling & Repositories
-- [ ] Task: Create `Product` document entity with embedded `Attribute` sub-documents.
-- [ ] Task: Write failing tests for `ProductRepository` operations.
-- [ ] Task: Implement `ProductRepository` using Spring Data MongoDB to pass tests.
-- [ ] Task: Create Mongock changelog for initial database schema/indexes and seed data.
+- [x] Task: Create `Product` document entity with embedded `Attribute` sub-documents.
+- [x] Task: Write failing tests for `ProductRepository` operations.
+- [x] Task: Implement `ProductRepository` using Spring Data MongoDB to pass tests.
+- [x] Task: Create Mongock changelog for initial database schema/indexes and seed data.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Domain Modeling & Repositories' (Protocol in workflow.md)
 
 ## Phase 3: Service Layer and Advanced Search

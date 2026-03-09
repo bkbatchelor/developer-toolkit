@@ -14,6 +14,7 @@ public class MongockSetupTest extends BaseIntegrationTest {
     @Test
     void testMongockInitialization() {
         // Context loading will fail if Mongock is not correctly configured.
-        assertThat(mongoTemplate.getCollectionNames()).isNotNull();
+        // We check for the presence of the mongock change log collection
+        assertThat(mongoTemplate.getCollectionNames()).containsAnyOf("mongockChangeLog", "products");
     }
 }
