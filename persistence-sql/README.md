@@ -43,11 +43,22 @@
 
 ## Testing
 
-| Name | Type | Description |
-| :--- | :--- | :--- |
-| `ProductControllerIntegrationTest` | Integration | Verifies product search and filtering logic via REST API endpoints. |
-| `ProductRepositoryTest` | Integration | Validates custom JPA repository queries and data access logic. |
-| `LiquibaseSetupTest` | Integration | Confirms that database migrations are correctly applied to the schema. |
+| Name of Method | Name of Class | Type | Description |
+| :--- | :--- | :--- | :--- |
+| `testPostgresPropertiesAreConfigured` | `DatabasePropertiesTest` | Integration | Tests if PostgreSQL properties are correctly configured. |
+| `testLiquibaseBeanIsConfigured` | `LiquibaseSetupTest` | Integration | Confirms that Liquibase bean is correctly configured. |
+| `shouldGetAllProducts` | `ProductControllerIntegrationTest` | Integration | Verifies retrieving all products via REST API. |
+| `shouldSearchProductsByName` | `ProductControllerIntegrationTest` | Integration | Verifies product search by name via REST API. |
+| `shouldFilterProductsByPriceRange` | `ProductControllerIntegrationTest` | Integration | Verifies product filtering by price range via REST API. |
+| `testCategoryPersistence` | `CategoryTest` | Integration | Validates Category entity persistence. |
+| `testProductPersistence` | `ProductTest` | Integration | Validates Product entity persistence. |
+| `testSupplierPersistence` | `SupplierTest` | Integration | Validates Supplier entity persistence. |
+| `shouldFindProductsByNameContaining` | `ProductRepositoryTest` | Integration | Validates finding products by name containing via JPA specifications. |
+| `shouldFindProductsByCategory` | `ProductRepositoryTest` | Integration | Validates finding products by category via JPA specifications. |
+| `shouldFindProductsByPriceRange` | `ProductRepositoryTest` | Integration | Validates finding products by price range via JPA specifications. |
+| `shouldFindProductsByMinStock` | `ProductRepositoryTest` | Integration | Validates finding products by minimum stock via JPA specifications. |
+| `shouldFindProductsByCombinedCriteria` | `ProductRepositoryTest` | Integration | Validates finding products by combined criteria via JPA specifications. |
+| `shouldBuildProductResponseDTO` | `ProductResponseDTOTest` | Unit | Tests DTO builder for product response. |
 
 ## Constraints
 *   Requires a running Docker daemon to execute the integration test suite (Testcontainers).

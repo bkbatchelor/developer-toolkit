@@ -1,70 +1,77 @@
-# Developer Toolkit
+# Developer Toolkit (DT)
 
-> The Developer Toolkit is a monorepo designed to provide a comparative analysis of SQL (PostgreSQL) and NoSQL (MongoDB) database architectures within a modern Java and Spring Boot ecosystem. It serves as a practical guide and boilerplate for understanding the trade-offs and benefits of each approach.
+> A comparative analysis of SQL (PostgreSQL) and NoSQL (MongoDB) database architectures within a modern Java 21 and Spring Boot 3.5.x ecosystem.
 
-## Documentation
-* [SQL and NoSQL Architectural Comparison](docs/sql_and_nosql_architectural_comparison.md)
+## 🚀 Features
 
-## Tech Stack
-*   **Java** 21
-*   **Spring Boot** 3.5.11
-*   **Gradle** 9.x.x
-*   **PostgreSQL** 42.7.5
-*   **MongoDB** (Driver managed by Spring Boot)
-*   **Liquibase** (Database Migrations)
-*   **Spring Data JPA / Spring Data MongoDB**
-*   **Testcontainers** 1.20.4
-*   **Lombok** 1.18.36
+- **Comparative Architecture:** Side-by-side implementation of a Product Catalog using Relational (SQL) and Document (NoSQL) storage.
+- **Modern Tech Stack:** Built with Java 21, Spring Boot 3.5.x, and Gradle 9.x.x.
+- **Database Migrations:** Managed schema changes using Liquibase (SQL) and Mongock (NoSQL).
+- **Advanced Testing:** Comprehensive integration test suite utilizing Testcontainers for isolated, containerized database instances.
+- **API Layer:** RESTful APIs with Jakarta Bean Validation for consistent data integrity.
+- **Monorepo Structure:** Cleanly separated modules for SQL and NoSQL persistence layers.
 
-## Prerequisites
-*   **Java 21**
-*   **Docker 24.0+** (Required for integration tests via Testcontainers)
+## 🛠 Tech Stack
 
-## Getting Started
+- **Primary Language:** Java 21
+- **Core Frameworks:** Spring Boot 3.5.x, Spring Data JPA, Spring Data MongoDB
+- **Build Tool:** Gradle 9.x.x (Kotlin DSL)
+- **Databases:** PostgreSQL 18+, MongoDB 8+
+- **Migrations:** Liquibase, Mongock
+- **Testing:** JUnit 5, AssertJ, Testcontainers
+- **Utilities:** Lombok
 
-### Build
-```bash
-./gradlew build
-```
+## 📦 Modules
 
-### Run (SQL Module)
+- **[persistence-sql](./persistence-sql)**: Implementation of a product catalog service using PostgreSQL.
+  - **Key Technologies**: Spring Data JPA, Hibernate, Liquibase, PostgreSQL Driver.
+  - **Functionality**: Normalized storage for products, categories, and suppliers with complex join support.
+- **[persistence-nosql](./persistence-nosql)**: Implementation of a product catalog service using MongoDB.
+  - **Key Technologies**: Spring Data MongoDB, Mongock.
+  - **Functionality**: Document-oriented storage with nested attributes and dynamic filtering support.
+
+## 💻 Installation
+
+1. **Prerequisites**
+   - Java 21 JDK
+   - Docker 24.0+ (Required for integration tests via Testcontainers)
+
+2. **Clone the repository**
+   ```bash
+   git clone https://github.com/bkbatchelor/developer-toolkit.git
+   cd developer-toolkit
+   ```
+
+3. **Build the project**
+   ```bash
+   ./gradlew build
+   ```
+
+## 🏃 Usage
+
+### Running Subprojects
+You can run each persistence module independently:
+
+**SQL Module:**
 ```bash
 ./gradlew :persistence-sql:bootRun
 ```
 
-### Run (NoSQL Module)
+**NoSQL Module:**
 ```bash
 ./gradlew :persistence-nosql:bootRun
 ```
 
-## Environment Variables / Configuration
+### Running Tests
+To execute the full test suite (requires Docker):
+```bash
+./gradlew test
+```
 
-### persistence-sql
-| Variable | Description | Default |
-| :--- | :--- | :--- |
-| `DB_USERNAME` | PostgreSQL username | `user` |
-| `DB_PASSWORD` | PostgreSQL password | `password` |
-| `spring.datasource.url` | Database connection string | `jdbc:postgresql://localhost:5432/dt_sql` |
+## 🤝 Contributing
 
-## API Endpoints
+Contributions are welcome! Please open an issue or submit a PR for any improvements or bug fixes.
 
-### persistence-sql
-| Verb | URL | Description |
-| :--- | :--- | :--- |
-| `GET` | `/api/v1/sql/products` | Searches and filters products by name, category, price, and stock levels. |
+## 📜 License
 
-## Testing
-
-The project uses **Testcontainers** to spin up actual database instances for integration testing.
-
-### persistence-sql
-| Name | Type | Description |
-| :--- | :--- | :--- |
-| `ProductControllerIntegrationTest` | Integration | Verifies product search and filtering logic via REST API endpoints. |
-| `ProductRepositoryTest` | Integration | Validates custom JPA repository queries and data access logic. |
-| `LiquibaseSetupTest` | Integration | Confirms that database migrations are correctly applied to the schema. |
-
-## Constraints
-*   Requires **Java 21**.
-*   **Docker** must be running to execute the full test suite.
-*   The `persistence-nosql` module is currently under development.
+This project is licensed under the [MIT](LICENSE) License.
