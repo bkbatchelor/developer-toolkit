@@ -20,10 +20,10 @@ public class InitialSetupChangeLog {
     public void execution(MongoTemplate mongoTemplate) {
         // Create Indexes
         IndexOperations indexOps = mongoTemplate.indexOps(Product.class);
-        indexOps.ensureIndex(new Index().on("sku", Sort.Direction.ASC).unique());
-        indexOps.ensureIndex(new Index().on("name", Sort.Direction.ASC));
-        indexOps.ensureIndex(new Index().on("categoryName", Sort.Direction.ASC));
-        indexOps.ensureIndex(new Index().on("price", Sort.Direction.ASC));
+        indexOps.createIndex(new Index().on("sku", Sort.Direction.ASC).unique());
+        indexOps.createIndex(new Index().on("name", Sort.Direction.ASC));
+        indexOps.createIndex(new Index().on("categoryName", Sort.Direction.ASC));
+        indexOps.createIndex(new Index().on("price", Sort.Direction.ASC));
 
         // Seed Data
         Product laptop = new Product();
