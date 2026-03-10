@@ -14,7 +14,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = TestApplication.class)
+@SpringBootTest(classes = SqlApplication.class)
 @ActiveProfiles("test")
 public class LiquibaseSetupTest {
 
