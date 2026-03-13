@@ -30,6 +30,17 @@
   - **Key Technologies**: Spring Data MongoDB, Mongock.
   - **Functionality**: Document-oriented storage with nested attributes and dynamic filtering support.
 
+## 📚 Documentation
+
+The `docs/sql-nosql-db` folder contains various materials comparing SQL and NoSQL architectures:
+
+| File Name | File Type | Description |
+| :--- | :--- | :--- |
+| `database_comparison_ guide.png` | Image | Visual guide comparing database architectures |
+| `intro_to_databases_slide_deck.pptx` | Presentation | Introductory slide deck on databases |
+| `postgres_18_mongoDB_8_and_testcontainers.m4a` | Audio | Audio discussion on Postgres 18, MongoDB 8, and Testcontainers |
+| `sql_and_nosql_architectural_comparison.md` | Markdown Document | Detailed architectural comparison of SQL and NoSQL databases |
+
 ## 💻 Installation
 
 1. **Prerequisites**
