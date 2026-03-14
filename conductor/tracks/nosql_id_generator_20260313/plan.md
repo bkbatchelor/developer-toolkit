@@ -1,9 +1,9 @@
 # Implementation Plan: MongoDB UUIDv7 ID and Index Generator
 
-## Phase 1: Project Setup & Module Initialization
+## Phase 1: Project Setup & Module Initialization [checkpoint: 355889f]
 - [x] Task: Create new Gradle module `persistence-nosql-id-generator`. [83b2fcc]
 - [x] Task: Configure basic dependencies for Spring Data MongoDB and Testcontainers. [53873ea]
-- [~] Task: Conductor - User Manual Verification 'Phase 1: Project Setup & Module Initialization' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Project Setup & Module Initialization' (Protocol in workflow.md) [355889f]
 
 ## Phase 2: UUIDv7 ID Generation Engine (TDD)
 - [ ] Task: Write failing unit tests for 128-bit container layout and time-ordering properties of UUIDv7.
