@@ -2,25 +2,21 @@ package com.developer.toolkit.nosql.idgenerator;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
 @Document(collection = "test_entities")
 public class TestEntity {
 
     @Id
+    @Field(targetType = FieldType.BINARY)
     private String id;
-
-    private String name;
 
     public TestEntity() {
     }
 
-    public TestEntity(String name) {
-        this.name = name;
-    }
-
-    public TestEntity(String id, String name) {
+    public TestEntity(String id) {
         this.id = id;
-        this.name = name;
     }
 
     public String getId() {
@@ -29,13 +25,5 @@ public class TestEntity {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

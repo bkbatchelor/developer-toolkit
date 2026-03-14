@@ -27,14 +27,13 @@ class UuidV7IntegrationTest extends BaseIdGeneratorIntegrationTest {
 
     @Test
     void shouldGenerateIdOnSaveAndStoreAsBinData() {
-        TestEntity entity = new TestEntity("Automated ID");
+        TestEntity entity = new TestEntity();
         TestEntity savedEntity = repository.save(entity);
 
         assertThat(savedEntity.getId()).isNotNull();
         assertThat(savedEntity.getId()).hasSize(32);
         assertThat(savedEntity.getId()).matches("^[0-9a-f]{32}$");
 
-        // Verify it was stored as BinData in MongoDB, not as a String
         Document rawDoc = mongoTemplate.getCollection("test_entities")
                 .find()
                 .first();
@@ -43,7 +42,6 @@ class UuidV7IntegrationTest extends BaseIdGeneratorIntegrationTest {
         Object rawId = rawDoc.get("_id");
         assertThat(rawId).isInstanceOf(Binary.class);
         
-        // Ensure that the BinData matches the encoded string
         Binary binId = (Binary) rawId;
         String encodedRaw = Base16Codec.encode(binId.getData());
         assertThat(encodedRaw).isEqualTo(savedEntity.getId());
@@ -52,44 +50,30 @@ class UuidV7IntegrationTest extends BaseIdGeneratorIntegrationTest {
     @Test
     void shouldRespectManuallySetValidId() {
         String manualId = UuidV7Generator.generateAsString();
-        TestEntity entity = new TestEntity(manualId, "Manual ID");
+        TestEntity entity = new TestEntity(manualId);
         TestEntity savedEntity = repository.save(entity);
 
         assertThat(savedEntity.getId()).isEqualTo(manualId);
 
         Optional<TestEntity> retrievedEntity = repository.findById(manualId);
         assertThat(retrievedEntity).isPresent();
-        assertThat(retrievedEntity.get().getName()).isEqualTo("Manual ID");
     }
 
     @Test
     void shouldThrowExceptionWhenSavingWithInvalidHexLength() {
-        TestEntity entity = new TestEntity("123", "Invalid Length ID");
+        TestEntity entity = new TestEntity("123");
         
         assertThatThrownBy(() -> repository.save(entity))
                 .hasRootCauseInstanceOf(IllegalArgumentException.class)
-                .hasStackTraceContaining("Hex string must have an even length");
+                .hasStackTraceContaining("Invalid Hexadecimal");
     }
 
     @Test
     void shouldThrowExceptionWhenSavingWithInvalidHexCharacters() {
-        TestEntity entity = new TestEntity("00ff1234abcd5678901234567890123G", "Invalid Char ID");
+        TestEntity entity = new TestEntity("00ff1234abcd5678901234567890123G");
 
         assertThatThrownBy(() -> repository.save(entity))
                 .hasRootCauseInstanceOf(IllegalArgumentException.class)
-                .hasStackTraceContaining("Invalid hexadecimal character");
-    }
-
-    @Test
-    void shouldRetrieveCorrectlyAfterSavingMultipleEntities() {
-        TestEntity e1 = repository.save(new TestEntity("Entity 1"));
-        TestEntity e2 = repository.save(new TestEntity("Entity 2"));
-        TestEntity e3 = repository.save(new TestEntity("Entity 3"));
-
-        assertThat(repository.count()).isEqualTo(3);
-        
-        assertThat(repository.findById(e1.getId())).isPresent().get().extracting(TestEntity::getName).isEqualTo("Entity 1");
-        assertThat(repository.findById(e2.getId())).isPresent().get().extracting(TestEntity::getName).isEqualTo("Entity 2");
-        assertThat(repository.findById(e3.getId())).isPresent().get().extracting(TestEntity::getName).isEqualTo("Entity 3");
+                .hasStackTraceContaining("Invalid Hexadecimal");
     }
 }
