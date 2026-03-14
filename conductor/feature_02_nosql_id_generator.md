@@ -1,6 +1,6 @@
 # Initial Concept
 
-ID Generator that generates secondary indexes for MongoDB
+# ID Generator that generates secondary indexes for MongoDB
 
 # Product Guide: MongoDB ID & Index Architect
 
