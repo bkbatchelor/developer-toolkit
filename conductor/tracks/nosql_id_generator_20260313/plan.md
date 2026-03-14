@@ -5,13 +5,13 @@
 - [x] Task: Configure basic dependencies for Spring Data MongoDB and Testcontainers. [53873ea]
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Project Setup & Module Initialization' (Protocol in workflow.md) [355889f]
 
-## Phase 2: UUIDv7 ID Generation Engine (TDD)
+## Phase 2: UUIDv7 ID Generation Engine (TDD) [checkpoint: 8dee199]
 - [x] Task: Write failing unit tests for 128-bit container layout and time-ordering properties of UUIDv7. [aba2597]
 - [x] Task: Implement core logic for UUIDv7 generation (Partition 1: Timestamp, Partition 2: Entropy) to pass tests. [af33231]
 - [x] Task: Write failing unit tests for Base16 (Hexadecimal) encoding and validation. [2752467]
 - [x] Task: Implement Base16 encoding logic to pass tests. [0799aa7]
 - [x] Task: Provide a static utility class for manual ID generation. [0799aa7]
-- [~] Task: Conductor - User Manual Verification 'Phase 2: UUIDv7 ID Generation Engine (TDD)' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: UUIDv7 ID Generation Engine (TDD)' (Protocol in workflow.md) [8dee199]
 
 ## Phase 3: Spring Data MongoDB Integration (TDD)
 - [ ] Task: Write failing integration tests (using Testcontainers) for custom `@Id` generator and `BinData` storage conversion.
