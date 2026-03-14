@@ -9,9 +9,9 @@
 - [x] Task: Write failing unit tests for 128-bit container layout and time-ordering properties of UUIDv7. [aba2597]
 - [x] Task: Implement core logic for UUIDv7 generation (Partition 1: Timestamp, Partition 2: Entropy) to pass tests. [af33231]
 - [x] Task: Write failing unit tests for Base16 (Hexadecimal) encoding and validation. [2752467]
-- [~] Task: Implement Base16 encoding logic to pass tests.
-- [ ] Task: Provide a static utility class for manual ID generation.
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: UUIDv7 ID Generation Engine (TDD)' (Protocol in workflow.md)
+- [x] Task: Implement Base16 encoding logic to pass tests. [0799aa7]
+- [x] Task: Provide a static utility class for manual ID generation. [0799aa7]
+- [~] Task: Conductor - User Manual Verification 'Phase 2: UUIDv7 ID Generation Engine (TDD)' (Protocol in workflow.md)
 
 ## Phase 3: Spring Data MongoDB Integration (TDD)
 - [ ] Task: Write failing integration tests (using Testcontainers) for custom `@Id` generator and `BinData` storage conversion.
