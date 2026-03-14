@@ -12,7 +12,7 @@ import org.testcontainers.containers.MongoDBContainer;
 @ActiveProfiles("test")
 public abstract class BaseIntegrationTest {
 
-    static final MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:6.0.10");
+    static final MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:8.0");
 
     static {
         mongoDBContainer.start();
