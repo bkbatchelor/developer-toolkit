@@ -2,8 +2,8 @@
 
 ## Phase 1: Project Setup & Module Initialization
 - [x] Task: Create new Gradle module `persistence-nosql-id-generator`. [83b2fcc]
-- [~] Task: Configure basic dependencies for Spring Data MongoDB and Testcontainers.
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Project Setup & Module Initialization' (Protocol in workflow.md)
+- [x] Task: Configure basic dependencies for Spring Data MongoDB and Testcontainers. [53873ea]
+- [~] Task: Conductor - User Manual Verification 'Phase 1: Project Setup & Module Initialization' (Protocol in workflow.md)
 
 ## Phase 2: UUIDv7 ID Generation Engine (TDD)
 - [ ] Task: Write failing unit tests for 128-bit container layout and time-ordering properties of UUIDv7.
