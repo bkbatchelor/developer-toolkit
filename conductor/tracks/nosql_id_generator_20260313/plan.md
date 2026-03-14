@@ -6,9 +6,9 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Project Setup & Module Initialization' (Protocol in workflow.md) [355889f]
 
 ## Phase 2: UUIDv7 ID Generation Engine (TDD)
-- [ ] Task: Write failing unit tests for 128-bit container layout and time-ordering properties of UUIDv7.
-- [ ] Task: Implement core logic for UUIDv7 generation (Partition 1: Timestamp, Partition 2: Entropy) to pass tests.
-- [ ] Task: Write failing unit tests for Base16 (Hexadecimal) encoding and validation.
+- [x] Task: Write failing unit tests for 128-bit container layout and time-ordering properties of UUIDv7. [aba2597]
+- [x] Task: Implement core logic for UUIDv7 generation (Partition 1: Timestamp, Partition 2: Entropy) to pass tests. [af33231]
+- [~] Task: Write failing unit tests for Base16 (Hexadecimal) encoding and validation.
 - [ ] Task: Implement Base16 encoding logic to pass tests.
 - [ ] Task: Provide a static utility class for manual ID generation.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: UUIDv7 ID Generation Engine (TDD)' (Protocol in workflow.md)
