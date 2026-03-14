@@ -82,4 +82,11 @@ class UuidV7GeneratorTest {
 
         assertThat(generatedIds).hasSize(threadCount * idsPerThread);
     }
+
+    @Test
+    void shouldGenerate32CharacterHexId() {
+        String idString = UuidV7Generator.generateAsString();
+        assertThat(idString).hasSize(32);
+        assertThat(idString).matches("^[0-9a-f]{32}$");
+    }
 }
