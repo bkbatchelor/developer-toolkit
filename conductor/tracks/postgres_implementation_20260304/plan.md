@@ -41,3 +41,6 @@
     - [x] Ensure all migrations run successfully on a real PostgreSQL container.
     - [x] Verify full CRUD and search operations via API.
 - [x] Task: Conductor - User Manual Verification 'Phase 4: Final Integration & Verification' (Protocol in workflow.md) 098de98
+
+## Phase: Review Fixes
+- [x] Task: Apply review suggestions [efdad01]
