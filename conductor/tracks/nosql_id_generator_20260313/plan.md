@@ -13,11 +13,11 @@
 - [x] Task: Provide a static utility class for manual ID generation. [0799aa7]
 - [x] Task: Conductor - User Manual Verification 'Phase 2: UUIDv7 ID Generation Engine (TDD)' (Protocol in workflow.md) [8dee199]
 
-## Phase 3: Spring Data MongoDB Integration (TDD)
+## Phase 3: Spring Data MongoDB Integration (TDD) [checkpoint: c5df46e]
 - [x] Task: Write failing integration tests (using Testcontainers) for custom `@Id` generator and `BinData` storage conversion. [2f8cde5]
 - [x] Task: Implement a custom Spring Data MongoDB `IdentifierGenerator` for time-ordered IDs to pass tests. [286f15d]
 - [x] Task: Implement custom `ReadingConverter` and `WritingConverter` for Hexadecimal <-> `BinData` mapping to pass tests. [286f15d]
-- [~] Task: Conductor - User Manual Verification 'Phase 3: Spring Data MongoDB Integration (TDD)' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Spring Data MongoDB Integration (TDD)' (Protocol in workflow.md) [c5df46e]
 
 ## Phase 4: Automated Index Management (TDD)
 - [ ] Task: Write failing integration tests (using Testcontainers) for automated index discovery and application at startup.
