@@ -15,9 +15,9 @@
 
 ## Phase 3: Spring Data MongoDB Integration (TDD)
 - [x] Task: Write failing integration tests (using Testcontainers) for custom `@Id` generator and `BinData` storage conversion. [2f8cde5]
-- [~] Task: Implement a custom Spring Data MongoDB `IdentifierGenerator` for time-ordered IDs to pass tests.
-- [ ] Task: Implement custom `ReadingConverter` and `WritingConverter` for Hexadecimal <-> `BinData` mapping to pass tests.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Spring Data MongoDB Integration (TDD)' (Protocol in workflow.md)
+- [x] Task: Implement a custom Spring Data MongoDB `IdentifierGenerator` for time-ordered IDs to pass tests. [286f15d]
+- [x] Task: Implement custom `ReadingConverter` and `WritingConverter` for Hexadecimal <-> `BinData` mapping to pass tests. [286f15d]
+- [~] Task: Conductor - User Manual Verification 'Phase 3: Spring Data MongoDB Integration (TDD)' (Protocol in workflow.md)
 
 ## Phase 4: Automated Index Management (TDD)
 - [ ] Task: Write failing integration tests (using Testcontainers) for automated index discovery and application at startup.
