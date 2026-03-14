@@ -32,4 +32,8 @@ public class UuidV7Generator {
 
         return id;
     }
+
+    public static String generateAsString() {
+        return Base16Codec.encode(generate());
+    }
 }
