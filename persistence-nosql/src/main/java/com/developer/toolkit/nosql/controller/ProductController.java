@@ -55,7 +55,7 @@ public class ProductController {
         }
 
         return ProductResponseDTO.builder()
-                .id(product.getId())
+                .productId(product.getId())
                 .name(product.getName())
                 .description(product.getDescription())
                 .price(product.getPrice())

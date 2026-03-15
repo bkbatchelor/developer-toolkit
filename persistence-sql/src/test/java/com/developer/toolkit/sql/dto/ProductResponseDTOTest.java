@@ -9,7 +9,7 @@ public class ProductResponseDTOTest {
     @Test
     void shouldBuildProductResponseDTO() {
         ProductResponseDTO dto = ProductResponseDTO.builder()
-                .id(1L)
+                .productId(1L)
                 .name("Test Product")
                 .description("Test Description")
                 .price(new BigDecimal("99.99"))
@@ -19,7 +19,7 @@ public class ProductResponseDTOTest {
                 .supplierName("Supplier ABC")
                 .build();
 
-        assertThat(dto.getId()).isEqualTo(1L);
+        assertThat(dto.getProductId()).isEqualTo(1L);
         assertThat(dto.getName()).isEqualTo("Test Product");
         assertThat(dto.getDescription()).isEqualTo("Test Description");
         assertThat(dto.getPrice()).isEqualTo(new BigDecimal("99.99"));

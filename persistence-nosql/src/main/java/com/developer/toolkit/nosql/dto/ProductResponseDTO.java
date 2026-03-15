@@ -9,7 +9,7 @@ import java.util.Map;
 @Data
 @Builder
 public class ProductResponseDTO {
-    private String id;
+    private String productId;
     private String name;
     private String description;
     private BigDecimal price;

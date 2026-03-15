@@ -12,7 +12,7 @@ class ProductResponseDTOTest {
     @Test
     void testDtoMapping() {
         ProductResponseDTO dto = ProductResponseDTO.builder()
-                .id("prod-1")
+                .productId("prod-1")
                 .name("Test Product")
                 .description("Description")
                 .price(new BigDecimal("100.00"))
@@ -23,7 +23,7 @@ class ProductResponseDTOTest {
                 .attributes(Map.of("color", "red"))
                 .build();
 
-        assertThat(dto.getId()).isEqualTo("prod-1");
+        assertThat(dto.getProductId()).isEqualTo("prod-1");
         assertThat(dto.getName()).isEqualTo("Test Product");
         assertThat(dto.getAttributes()).containsEntry("color", "red");
     }
