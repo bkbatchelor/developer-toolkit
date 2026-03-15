@@ -19,11 +19,11 @@
 - [x] Task: Implement custom `ReadingConverter` and `WritingConverter` for Hexadecimal <-> `BinData` mapping to pass tests. [286f15d]
 - [x] Task: Conductor - User Manual Verification 'Phase 3: Spring Data MongoDB Integration (TDD)' (Protocol in workflow.md) [c5df46e]
 
-## Phase 4: Automated Index Management (TDD)
+## Phase 4: Automated Index Management (TDD) [checkpoint: a24a461]
 - [x] Task: Write failing integration tests (using Testcontainers) for automated index discovery and application at startup. [2f407b9]
 - [x] Task: Implement a mechanism to scan entities for Spring Data MongoDB index annotations to pass tests. [eeb7b39]
 - [x] Task: Develop an automated index initializer to ensure collection indexes are applied on startup to pass tests. [eeb7b39]
-- [~] Task: Conductor - User Manual Verification 'Phase 4: Automated Index Management (TDD)' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4: Automated Index Management (TDD)' (Protocol in workflow.md) [a24a461]
 
 ## Phase 5: Final Integration, Reliability & Security (TDD)
 - [ ] Task: Write failing tests for "Query Buffer" strategy (NTP drift mitigation).
