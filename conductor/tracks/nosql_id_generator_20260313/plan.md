@@ -20,10 +20,10 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 3: Spring Data MongoDB Integration (TDD)' (Protocol in workflow.md) [c5df46e]
 
 ## Phase 4: Automated Index Management (TDD)
-- [ ] Task: Write failing integration tests (using Testcontainers) for automated index discovery and application at startup.
-- [ ] Task: Implement a mechanism to scan entities for Spring Data MongoDB index annotations to pass tests.
-- [ ] Task: Develop an automated index initializer to ensure collection indexes are applied on startup to pass tests.
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: Automated Index Management (TDD)' (Protocol in workflow.md)
+- [x] Task: Write failing integration tests (using Testcontainers) for automated index discovery and application at startup. [2f407b9]
+- [x] Task: Implement a mechanism to scan entities for Spring Data MongoDB index annotations to pass tests. [eeb7b39]
+- [x] Task: Develop an automated index initializer to ensure collection indexes are applied on startup to pass tests. [eeb7b39]
+- [~] Task: Conductor - User Manual Verification 'Phase 4: Automated Index Management (TDD)' (Protocol in workflow.md)
 
 ## Phase 5: Final Integration, Reliability & Security (TDD)
 - [ ] Task: Write failing tests for "Query Buffer" strategy (NTP drift mitigation).
