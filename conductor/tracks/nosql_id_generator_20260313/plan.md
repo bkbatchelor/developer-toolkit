@@ -26,8 +26,8 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 4: Automated Index Management (TDD)' (Protocol in workflow.md) [a24a461]
 
 ## Phase 5: Final Integration, Reliability & Security (TDD)
-- [ ] Task: Write failing tests for "Query Buffer" strategy (NTP drift mitigation).
-- [ ] Task: Implement "Query Buffer" logic to handle clock skew to pass tests.
+- [x] Task: Write failing tests for "Query Buffer" strategy (NTP drift mitigation). [d301822]
+- [~] Task: Implement "Query Buffer" logic to handle clock skew to pass tests.
 - [ ] Task: Write ArchUnit rules to enforce "Hardened Signatures" and IDOR protection at the application level.
 - [ ] Task: Perform end-to-end integration testing using Testcontainers for MongoDB 8+.
 - [ ] Task: Conductor - User Manual Verification 'Phase 5: Final Integration, Reliability & Security (TDD)' (Protocol in workflow.md)
