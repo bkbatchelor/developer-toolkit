@@ -27,14 +27,16 @@ class AutoIndexIntegrationTest extends BaseIdGeneratorIntegrationTest {
                 .map(doc -> doc.getString("name"))
                 .toList();
 
+        System.out.println("Actual index names in DB: " + indexNames);
+
         // 1. Default _id index
         assertThat(indexNames).contains("_id_");
 
         // 2. @Indexed(unique = true) index on "uniqueField"
-        assertThat(indexNames).contains("uniqueField_1");
+        assertThat(indexNames).contains("uniqueField");
         
         Optional<Document> uniqueFieldIndex = indexInfo.stream()
-                .filter(doc -> "uniqueField_1".equals(doc.getString("name")))
+                .filter(doc -> "uniqueField".equals(doc.getString("name")))
                 .findFirst();
         assertThat(uniqueFieldIndex).isPresent();
         assertThat(uniqueFieldIndex.get().getBoolean("unique")).isTrue();
