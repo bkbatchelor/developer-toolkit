@@ -23,16 +23,11 @@ public class AutoIndexInitializer {
 
     @EventListener(ApplicationReadyEvent.class)
     public void initIndicesAfterStartup() {
-        System.out.println("AutoIndexInitializer: initIndicesAfterStartup called!");
         IndexResolver resolver = new MongoPersistentEntityIndexResolver(mongoMappingContext);
 
         for (MongoPersistentEntity<?> entity : mongoMappingContext.getPersistentEntities()) {
-            System.out.println("AutoIndexInitializer: Processing entity: " + entity.getType().getName());
             IndexOperations indexOps = mongoTemplate.indexOps(entity.getType());
-            resolver.resolveIndexFor(entity.getType()).forEach(idx -> {
-                System.out.println("AutoIndexInitializer: Creating index: " + idx);
-                indexOps.ensureIndex(idx);
-            });
+            resolver.resolveIndexFor(entity.getType()).forEach(indexOps::createIndex);
         }
     }
 }
