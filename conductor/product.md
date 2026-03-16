@@ -24,6 +24,7 @@ To equip developers with a comparative understanding of SQL vs. NoSQL architectu
 ## Core Architecture
 - `persistence-sql/`: JPA entities, repositories, and Liquibase change-logs.
 - `persistence-nosql/`: MongoDB documents and repositories.
+- `persistence-nosql-id-generator/`: High-performance UUIDv7 ID generator and BSON binary converter for MongoDB.
 
 ## Deployment & CI/CD
 - **Continuous Integration:** **GitHub Actions** will be used for automated build and test verification.
