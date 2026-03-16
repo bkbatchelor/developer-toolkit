@@ -48,6 +48,13 @@ The `docs/sql-nosql-db` folder contains various materials comparing SQL and NoSQ
 | `sql_vs_nosql_podcast.m4a` | Audio | Audio discussion on Postgres, MongoDB, and Testcontainers |
 | `sql_and_nosql_architectural_comparison.md` | Markdown Document | Detailed architectural comparison of SQL and NoSQL databases |
 
+The `docs/nosql-id-generator` folder contains materials specifically for the UUIDv7 generator:
+
+| File Name | File Type | Description |
+| :--- | :--- | :--- |
+| `Precision_NoSQL_ID_Foundry.pptx` | Presentation | Deep dive into UUIDv7 generation and BSON storage |
+| `Deep_Dive-How_UUIDv7_optimizes_NoSQL_performance_and_security.m4a` | Audio | Technical discussion on performance and security benefits |
+
 ## 💻 Installation
 
 1. **Prerequisites**
