@@ -4,5 +4,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [~] **Track: Implementation of a high-performance Java library for UUIDv7 ID generation and static secondary index generation for MongoDB**
+- [x] **Track: Implementation of a high-performance Java library for UUIDv7 ID generation and static secondary index generation for MongoDB**
   *Link: [./tracks/nosql_id_generator_20260313/](./tracks/nosql_id_generator_20260313/)*
