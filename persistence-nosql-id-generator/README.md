@@ -1,49 +1,49 @@
-# NoSQL ID & Index Generator
+# persistence-nosql-id-generator
 
-A high-performance Java library specifically designed for Spring Data MongoDB applications. This module provides time-ordered UUIDv7 generation, optimal BSON binary storage conversion, and automated index management.
+> A high-performance Java library for Spring Data MongoDB providing time-ordered UUIDv7 generation, BSON binary storage conversion, and automated index management.
 
-## 🚀 Key Features
+## Documentation
+* [SQL and NoSQL Architectural Comparison](../docs/sql-nosql-db/sql_and_nosql_architectural_comparison.md)
 
-- **UUIDv7 Generation:** High-performance, time-ordered unique identifiers following the UUIDv7 specification (48-bit timestamp, 80-bit entropy).
-- **Optimal BSON Storage:** Seamless conversion between 32-character Hexadecimal strings in Java and efficient `BinData` in MongoDB, reducing index size and improving query performance.
-- **Automated Index Initialization:** Discovery and application of Spring Data MongoDB index annotations (`@Indexed`, `@CompoundIndex`) at application startup.
-- **Query Drift Mitigation:** "Query Buffer" utilities to handle NTP clock skew between distributed systems during range-based queries.
-- **Architectural Security:** Integrated **ArchUnit** rules to enforce "Hardened Signatures" and prevent Insecure Direct Object Reference (IDOR) vulnerabilities.
+## Tech Stack
+*   Java 21
+*   Spring Boot 3.5.x
+*   Spring Data MongoDB
+*   MongoDB 8+ (Driver managed by Spring Boot)
+*   Gradle 9.x.x
+*   Testcontainers 1.21.4
+*   ArchUnit 1.3.0
 
-## 🛠 Tech Stack
+## Prerequisites
+*   Java 21
+*   Docker 24.0+ (Required for integration tests via Testcontainers)
 
-- **Java 21:** Modern language features for robust identifier handling.
-- **Spring Data MongoDB:** Seamless integration with the Spring ecosystem.
-- **MongoDB 8+:** Leverages modern BSON performance optimizations.
-- **Testcontainers:** End-to-end verification using isolated MongoDB instances.
-- **ArchUnit:** Automated architectural and security rule enforcement.
+## Getting Started
 
-## 📦 Components
+### Build
+```bash
+./gradlew :persistence-nosql-id-generator:build
+```
+### Test
+```bash
+./gradlew :persistence-nosql-id-generator:test
+```
 
-### `UuidV7Generator`
-Core engine for generating 128-bit UUIDv7 identifiers. Supports both raw `byte[]` and Base16 (Hexadecimal) string formats.
+## Features & Components
+| Component | Description |
+| :--- | :--- |
+| `UuidV7Generator` | Core engine for generating 128-bit UUIDv7 identifiers. |
+| `UuidV7WritingConverter` | Converts Java Strings to MongoDB Binary types. |
+| `UuidV7ReadingConverter` | Converts MongoDB Binary types to Java Strings. |
+| `UuidV7IdGeneratorCallback` | Automatically assigns and validates identifiers before they reach the database layer. |
+| `AutoIndexInitializer` | Discovers and applies Spring Data MongoDB index annotations at application startup. |
+| `UuidV7QueryUtils` | Extracts timestamps from IDs and generates range query boundaries with a configurable buffer. |
 
-### `UuidV7WritingConverter` & `UuidV7ReadingConverter`
-Native Spring Data converters that bridge Java Strings and MongoDB Binary types. Uses a `GenericConverter` strategy to ensure ID conversion is targeted and safe for other string fields.
-
-### `UuidV7IdGeneratorCallback`
-A Spring Data `BeforeConvertCallback` and `BeforeSaveCallback` that automatically assigns and validates identifiers before they reach the database layer.
-
-### `AutoIndexInitializer`
-Listens for the `ApplicationReadyEvent` to scan and apply collection indexes, ensuring the database schema matches application requirements on startup.
-
-### `UuidV7QueryUtils`
-Utilities for extracting timestamps from IDs and generating "safe" range query boundaries with a configurable buffer (default 5s) to mitigate NTP drift.
-
-## 💻 Usage
-
-### Dependency Integration
+## Usage Configuration
 Add the following to your `build.gradle.kts`:
 ```kotlin
 implementation(project(":persistence-nosql-id-generator"))
 ```
-
-### Entity Configuration
 Annotate your `@Id` field with `@Field(targetType = FieldType.BINARY)` to activate optimal storage:
 ```java
 @Document(collection = "products")
@@ -51,29 +51,30 @@ public class Product {
     @Id
     @Field(targetType = FieldType.BINARY)
     private String id;
-    
-    // ...
 }
 ```
 
-### Manual ID Generation
-```java
-String id = UuidV7Generator.generateAsString();
-```
+## Testing
 
-## 🧪 Testing
+| Name of Method | Name of Class | Type | Description |
+| :--- | :--- | :--- | :--- |
+| `shouldGenerate16ByteId` | `UuidV7GeneratorTest` | Unit | Verifies UUIDv7 generator produces a 16-byte array. |
+| `shouldContainCurrentTimestampInFirst48Bits` | `UuidV7GeneratorTest` | Unit | Validates the timestamp partition of the UUIDv7 generator. |
+| `shouldBeTimeOrdered` | `UuidV7GeneratorTest` | Unit | Validates that generated IDs are strictly time-ordered. |
+| `shouldGenerate32CharacterHexId` | `UuidV7GeneratorTest` | Unit | Validates Base16 encoded string representation. |
+| `shouldEncodeBytesToHex` | `Base16CodecTest` | Unit | Tests Base16 encoding. |
+| `shouldDecodeHexToBytes` | `Base16CodecTest` | Unit | Tests Base16 decoding. |
+| `shouldExtractTimestampFromUuidV7String` | `UuidV7QueryUtilsTest` | Unit | Verifies timestamp extraction from UUIDv7 hex string. |
+| `shouldCalculateSafeQueryTimestampWithBuffer` | `UuidV7QueryUtilsTest` | Unit | Tests safe query timestamp calculation. |
+| `shouldCreateSafeQueryIdForTimestamp` | `UuidV7QueryUtilsTest` | Unit | Verifies generation of safe query IDs. |
+| `repository_methods_should_have_hardened_signatures` | `SecurityArchUnitTest` | Architecture | Enforces repository methods have specific return types. |
+| `controller_methods_should_not_expose_raw_id_in_path_variables` | `SecurityArchUnitTest` | Architecture | Prevents raw String IDs in PathVariables (IDOR protection). |
+| `dtos_should_not_expose_raw_id_field` | `SecurityArchUnitTest` | Architecture | Prevents DTOs from exposing raw 'id' fields. |
+| `shouldGenerateIdOnSaveAndStoreAsBinData` | `UuidV7IntegrationTest` | Integration | Verifies ID generation and BinData storage conversion on save. |
+| `shouldRespectManuallySetValidId` | `UuidV7IntegrationTest` | Integration | Validates that manually set valid UUIDv7 IDs are preserved. |
+| `shouldThrowExceptionWhenSavingWithInvalidHexLength` | `UuidV7IntegrationTest` | Integration | Ensures validation exception is thrown for invalid ID lengths. |
+| `shouldThrowExceptionWhenSavingWithInvalidHexCharacters` | `UuidV7IntegrationTest` | Integration | Ensures validation exception is thrown for invalid ID characters. |
+| `shouldAutomaticallyApplyIndexesOnStartup` | `AutoIndexIntegrationTest` | Integration | Validates automatic discovery and application of index annotations. |
 
-### Running Tests
-Execute the comprehensive test suite (requires Docker for Testcontainers):
-```bash
-./gradlew :persistence-nosql-id-generator:test
-```
-
-### Security Auditing
-The module includes ArchUnit rules to ensure:
-1. DTOs do not expose raw `id` fields (use `productId` or similar).
-2. Repositories do not use raw `Object` return types.
-3. Controllers do not use raw `String` path variables for IDs.
-
-## 📜 License
-This module is part of the [Developer Toolkit](../README.md) and is licensed under the [MIT](../LICENSE) License.
+## Constraints
+*   Requires a running Docker daemon to execute the integration test suite (Testcontainers).
