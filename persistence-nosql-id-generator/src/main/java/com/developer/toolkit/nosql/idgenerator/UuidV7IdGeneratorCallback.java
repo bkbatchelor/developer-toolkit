@@ -42,9 +42,10 @@ public class UuidV7IdGeneratorCallback implements BeforeConvertCallback<Object>,
             Object idObj = document.get("_id");
             if (idObj instanceof String) {
                 String strId = (String) idObj;
-                if (strId.length() == 32 && strId.matches("^[0-9a-fA-F]{32}$")) {
-                    document.put("_id", new Binary(BsonBinarySubType.UUID_STANDARD, Base16Codec.decode(strId)));
+                if (strId.length() != 32 || !strId.matches("^[0-9a-fA-F]{32}$")) {
+                    throw new IllegalArgumentException("Invalid Hexadecimal UUIDv7 String");
                 }
+                document.put("_id", new Binary(BsonBinarySubType.UUID_STANDARD, Base16Codec.decode(strId)));
             }
         }
         return entity;

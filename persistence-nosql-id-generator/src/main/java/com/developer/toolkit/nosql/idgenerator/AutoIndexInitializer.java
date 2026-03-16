@@ -26,8 +26,10 @@ public class AutoIndexInitializer {
         IndexResolver resolver = new MongoPersistentEntityIndexResolver(mongoMappingContext);
 
         for (MongoPersistentEntity<?> entity : mongoMappingContext.getPersistentEntities()) {
-            IndexOperations indexOps = mongoTemplate.indexOps(entity.getType());
-            resolver.resolveIndexFor(entity.getType()).forEach(indexOps::createIndex);
+            if (entity.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Document.class)) {
+                IndexOperations indexOps = mongoTemplate.indexOps(entity.getType());
+                resolver.resolveIndexFor(entity.getType()).forEach(indexOps::createIndex);
+            }
         }
     }
 }
