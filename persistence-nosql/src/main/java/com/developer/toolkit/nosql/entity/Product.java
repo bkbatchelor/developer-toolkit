@@ -14,6 +14,7 @@ import java.util.List;
 public class Product {
 
     @Id
+    @Field(targetType = FieldType.BINARY)
     private String id;
 
     private String name;

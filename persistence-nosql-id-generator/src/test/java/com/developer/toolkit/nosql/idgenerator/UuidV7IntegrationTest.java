@@ -64,8 +64,8 @@ class UuidV7IntegrationTest extends BaseIdGeneratorIntegrationTest {
         TestEntity entity = new TestEntity("123");
         
         assertThatThrownBy(() -> repository.save(entity))
-                .hasRootCauseInstanceOf(IllegalArgumentException.class)
-                .hasStackTraceContaining("Invalid Hexadecimal");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Invalid Hexadecimal");
     }
 
     @Test
@@ -73,7 +73,7 @@ class UuidV7IntegrationTest extends BaseIdGeneratorIntegrationTest {
         TestEntity entity = new TestEntity("00ff1234abcd5678901234567890123G");
 
         assertThatThrownBy(() -> repository.save(entity))
-                .hasRootCauseInstanceOf(IllegalArgumentException.class)
-                .hasStackTraceContaining("Invalid Hexadecimal");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Invalid Hexadecimal");
     }
 }

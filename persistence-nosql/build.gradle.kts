@@ -9,6 +9,7 @@ dependencies {
 
     implementation(libs.spring.boot.starter.data.mongodb)
     implementation(libs.spring.boot.starter.web)
+    implementation(project(":persistence-nosql-id-generator"))
     
     testImplementation(libs.testcontainers.junit.jupiter)
     testImplementation(libs.testcontainers.mongodb)

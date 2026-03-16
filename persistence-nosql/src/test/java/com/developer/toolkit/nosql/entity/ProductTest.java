@@ -22,7 +22,7 @@ class ProductTest extends BaseIntegrationTest {
         Attribute size = new Attribute("size", "XL");
         
         Product product = new Product();
-        product.setId("prod-1");
+        product.setId("0123456789abcdef0123456789abcdef");
         product.setName("Test Product");
         product.setDescription("Test Description");
         product.setPrice(new BigDecimal("99.99"));
