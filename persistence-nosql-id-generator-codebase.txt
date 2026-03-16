@@ -1,0 +1,1054 @@
+
+
+## File: persistence-nosql-id-generator/src/test/java/com/developer/toolkit/nosql/idgenerator/IndexedEntityRepository.java
+```
+package com.developer.toolkit.nosql.idgenerator;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface IndexedEntityRepository extends MongoRepository<IndexedEntity, String> {
+}
+
+```
+
+
+## File: persistence-nosql-id-generator/src/test/java/com/developer/toolkit/nosql/idgenerator/TestEntity.java
+```
+package com.developer.toolkit.nosql.idgenerator;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+
+@Document(collection = "test_entities")
+public class TestEntity {
+
+    @Id
+    @Field(targetType = FieldType.BINARY)
+    private String id;
+
+    public TestEntity() {
+    }
+
+    public TestEntity(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+}
+
+```
+
+
+## File: persistence-nosql-id-generator/src/test/java/com/developer/toolkit/nosql/idgenerator/IndexedEntity.java
+```
+package com.developer.toolkit.nosql.idgenerator;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+
+@Document(collection = "indexed_entities")
+@CompoundIndexes({
+    @CompoundIndex(name = "name_category_idx", def = "{'name': 1, 'category': 1}")
+})
+public class IndexedEntity {
+
+    @Id
+    @Field(targetType = FieldType.BINARY)
+    private String id;
+
+    @Indexed(unique = true)
+    private String uniqueField;
+
+    private String name;
+
+    private String category;
+
+    public IndexedEntity() {
+    }
+
+    public IndexedEntity(String uniqueField, String name, String category) {
+        this.uniqueField = uniqueField;
+        this.name = name;
+        this.category = category;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUniqueField() {
+        return uniqueField;
+    }
+
+    public void setUniqueField(String uniqueField) {
+        this.uniqueField = uniqueField;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+}
+
+```
+
+
+## File: persistence-nosql-id-generator/src/test/java/com/developer/toolkit/nosql/idgenerator/UuidV7IntegrationTest.java
+```
+package com.developer.toolkit.nosql.idgenerator;
+
+import org.bson.Document;
+import org.bson.types.Binary;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+class UuidV7IntegrationTest extends BaseIdGeneratorIntegrationTest {
+
+    @Autowired
+    private TestEntityRepository repository;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
+    @AfterEach
+    void tearDown() {
+        repository.deleteAll();
+    }
+
+    @Test
+    void shouldGenerateIdOnSaveAndStoreAsBinData() {
+        TestEntity entity = new TestEntity();
+        TestEntity savedEntity = repository.save(entity);
+
+        assertThat(savedEntity.getId()).isNotNull();
+        assertThat(savedEntity.getId()).hasSize(32);
+        assertThat(savedEntity.getId()).matches("^[0-9a-f]{32}$");
+
+        Document rawDoc = mongoTemplate.getCollection("test_entities")
+                .find()
+                .first();
+
+        assertThat(rawDoc).isNotNull();
+        Object rawId = rawDoc.get("_id");
+        assertThat(rawId).isInstanceOf(Binary.class);
+        
+        Binary binId = (Binary) rawId;
+        String encodedRaw = Base16Codec.encode(binId.getData());
+        assertThat(encodedRaw).isEqualTo(savedEntity.getId());
+    }
+
+    @Test
+    void shouldRespectManuallySetValidId() {
+        String manualId = UuidV7Generator.generateAsString();
+        TestEntity entity = new TestEntity(manualId);
+        TestEntity savedEntity = repository.save(entity);
+
+        assertThat(savedEntity.getId()).isEqualTo(manualId);
+
+        Optional<TestEntity> retrievedEntity = repository.findById(manualId);
+        assertThat(retrievedEntity).isPresent();
+    }
+
+    @Test
+    void shouldThrowExceptionWhenSavingWithInvalidHexLength() {
+        TestEntity entity = new TestEntity("123");
+        
+        assertThatThrownBy(() -> repository.save(entity))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Invalid Hexadecimal");
+    }
+
+    @Test
+    void shouldThrowExceptionWhenSavingWithInvalidHexCharacters() {
+        TestEntity entity = new TestEntity("00ff1234abcd5678901234567890123G");
+
+        assertThatThrownBy(() -> repository.save(entity))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Invalid Hexadecimal");
+    }
+}
+
+```
+
+
+## File: persistence-nosql-id-generator/src/test/java/com/developer/toolkit/nosql/idgenerator/BaseIdGeneratorIntegrationTest.java
+```
+package com.developer.toolkit.nosql.idgenerator;
+
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.MongoDBContainer;
+
+@SpringBootTest(classes = TestApplication.class)
+public abstract class BaseIdGeneratorIntegrationTest {
+
+    static final MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:8.0");
+
+    static {
+        mongoDBContainer.start();
+    }
+
+    @DynamicPropertySource
+    static void setProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.data.mongodb.uri", mongoDBContainer::getReplicaSetUrl);
+    }
+}
+
+```
+
+
+## File: persistence-nosql-id-generator/src/test/java/com/developer/toolkit/nosql/idgenerator/SecurityArchUnitTest.java
+```
+package com.developer.toolkit.nosql.idgenerator;
+
+import com.tngtech.archunit.core.domain.JavaClass;
+import com.tngtech.archunit.core.domain.JavaMethod;
+import com.tngtech.archunit.core.importer.ImportOption;
+import com.tngtech.archunit.junit.AnalyzeClasses;
+import com.tngtech.archunit.junit.ArchTest;
+import com.tngtech.archunit.lang.ArchRule;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.methods;
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noMethods;
+
+@AnalyzeClasses(packages = "com.developer.toolkit", importOptions = ImportOption.DoNotIncludeTests.class)
+public class SecurityArchUnitTest {
+
+    @ArchTest
+    static final ArchRule repository_methods_should_have_hardened_signatures =
+            methods().that().areDeclaredInClassesThat().resideInAPackage("..repository..")
+                    .should().notHaveRawReturnType(Object.class)
+                    .allowEmptyShould(true);
+
+    @ArchTest
+    static final ArchRule controller_methods_should_not_expose_raw_id_in_path_variables =
+            noMethods().that().areDeclaredInClassesThat().areAnnotatedWith(RestController.class)
+                    .should(new com.tngtech.archunit.lang.ArchCondition<JavaMethod>("expose raw String ID in PathVariable") {
+                        @Override
+                        public void check(JavaMethod method, com.tngtech.archunit.lang.ConditionEvents events) {
+                            method.getParameters().stream()
+                                    .filter(p -> p.isAnnotatedWith(PathVariable.class) && p.getRawType().getName().equals("java.lang.String"))
+                                    .forEach(p -> events.add(com.tngtech.archunit.lang.SimpleConditionEvent.violated(method, 
+                                            String.format("Method %s has a String PathVariable", method.getFullName()))));
+                        }
+                    })
+                    .allowEmptyShould(true);
+
+    @ArchTest
+    static final ArchRule dtos_should_not_expose_raw_id_field =
+            classes().that().resideInAPackage("..dto..")
+                    .should(new com.tngtech.archunit.lang.ArchCondition<JavaClass>("not have field named 'id'") {
+                        @Override
+                        public void check(JavaClass item, com.tngtech.archunit.lang.ConditionEvents events) {
+                            System.out.println("ArchUnit Scanning: " + item.getName());
+                            item.getFields().stream()
+                                    .filter(field -> field.getName().equalsIgnoreCase("id"))
+                                    .forEach(field -> events.add(com.tngtech.archunit.lang.SimpleConditionEvent.violated(item, 
+                                            String.format("Class %s has field named '%s'", item.getName(), field.getName()))));
+                        }
+                    })
+                    .allowEmptyShould(true);
+}
+
+```
+
+
+## File: persistence-nosql-id-generator/src/test/java/com/developer/toolkit/nosql/idgenerator/TestApplication.java
+```
+package com.developer.toolkit.nosql.idgenerator;
+
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.core.convert.converter.GenericConverter;
+import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@SpringBootApplication
+public class TestApplication {
+
+    @Bean
+    public MongoCustomConversions customConversions(List<Converter<?, ?>> converters, List<GenericConverter> genericConverters) {
+        List<Object> allConverters = new ArrayList<>(converters);
+        allConverters.addAll(genericConverters);
+        return new MongoCustomConversions(allConverters);
+    }
+}
+
+```
+
+
+## File: persistence-nosql-id-generator/src/test/java/com/developer/toolkit/nosql/idgenerator/Base16CodecTest.java
+```
+package com.developer.toolkit.nosql.idgenerator;
+
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+class Base16CodecTest {
+
+    @Test
+    void shouldEncodeBytesToHex() {
+        byte[] bytes = new byte[]{0x00, (byte) 0xFF, 0x12, 0x34, (byte) 0xAB, (byte) 0xCD};
+        String hex = Base16Codec.encode(bytes);
+        assertThat(hex).isEqualTo("00ff1234abcd");
+    }
+
+    @Test
+    void shouldDecodeHexToBytes() {
+        String hex = "00ff1234abcd";
+        byte[] bytes = Base16Codec.decode(hex);
+        assertThat(bytes).containsExactly(0x00, (byte) 0xFF, 0x12, 0x34, (byte) 0xAB, (byte) 0xCD);
+    }
+
+    @Test
+    void shouldDecodeUppercaseHexToBytes() {
+        String hex = "00FF1234ABCD";
+        byte[] bytes = Base16Codec.decode(hex);
+        assertThat(bytes).containsExactly(0x00, (byte) 0xFF, 0x12, 0x34, (byte) 0xAB, (byte) 0xCD);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenDecodingOddLengthString() {
+        assertThatThrownBy(() -> Base16Codec.decode("123"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("length");
+    }
+
+    @Test
+    void shouldThrowExceptionWhenDecodingInvalidCharacters() {
+        assertThatThrownBy(() -> Base16Codec.decode("123g"))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void shouldReturnEmptyStringForEmptyByteArray() {
+        assertThat(Base16Codec.encode(new byte[0])).isEmpty();
+    }
+
+    @Test
+    void shouldReturnEmptyByteArrayForEmptyString() {
+        assertThat(Base16Codec.decode("")).isEmpty();
+    }
+}
+
+```
+
+
+## File: persistence-nosql-id-generator/src/test/java/com/developer/toolkit/nosql/idgenerator/AutoIndexIntegrationTest.java
+```
+package com.developer.toolkit.nosql.idgenerator;
+
+import org.bson.Document;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class AutoIndexIntegrationTest extends BaseIdGeneratorIntegrationTest {
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
+    @Test
+    void shouldAutomaticallyApplyIndexesOnStartup() {
+        // Retrieve all indexes for the "indexed_entities" collection
+        List<Document> indexInfo = new ArrayList<>();
+        mongoTemplate.getCollection("indexed_entities").listIndexes().into(indexInfo);
+
+        // Extract index names
+        List<String> indexNames = indexInfo.stream()
+                .map(doc -> doc.getString("name"))
+                .toList();
+
+        System.out.println("Actual index names in DB: " + indexNames);
+
+        // 1. Default _id index
+        assertThat(indexNames).contains("_id_");
+
+        // 2. @Indexed(unique = true) index on "uniqueField"
+        assertThat(indexNames).contains("uniqueField");
+        
+        Optional<Document> uniqueFieldIndex = indexInfo.stream()
+                .filter(doc -> "uniqueField".equals(doc.getString("name")))
+                .findFirst();
+        assertThat(uniqueFieldIndex).isPresent();
+        assertThat(uniqueFieldIndex.get().getBoolean("unique")).isTrue();
+
+        // 3. @CompoundIndex on "name" and "category"
+        assertThat(indexNames).contains("name_category_idx");
+        
+        Optional<Document> compoundIndex = indexInfo.stream()
+                .filter(doc -> "name_category_idx".equals(doc.getString("name")))
+                .findFirst();
+        assertThat(compoundIndex).isPresent();
+        Document keyDoc = compoundIndex.get().get("key", Document.class);
+        assertThat(keyDoc).isNotNull();
+        assertThat(keyDoc.get("name")).isEqualTo(1);
+        assertThat(keyDoc.get("category")).isEqualTo(1);
+    }
+}
+
+```
+
+
+## File: persistence-nosql-id-generator/src/test/java/com/developer/toolkit/nosql/idgenerator/TestEntityRepository.java
+```
+package com.developer.toolkit.nosql.idgenerator;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface TestEntityRepository extends MongoRepository<TestEntity, String> {
+}
+
+```
+
+
+## File: persistence-nosql-id-generator/src/test/java/com/developer/toolkit/nosql/idgenerator/UuidV7GeneratorTest.java
+```
+package com.developer.toolkit.nosql.idgenerator;
+
+import org.junit.jupiter.api.Test;
+
+import java.nio.ByteBuffer;
+import java.time.Instant;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class UuidV7GeneratorTest {
+
+    @Test
+    void shouldGenerate16ByteId() {
+        byte[] id = UuidV7Generator.generate();
+        assertThat(id).hasSize(16);
+    }
+
+    @Test
+    void shouldContainCurrentTimestampInFirst48Bits() {
+        long before = Instant.now().toEpochMilli();
+        byte[] id = UuidV7Generator.generate();
+        long after = Instant.now().toEpochMilli();
+
+        ByteBuffer buffer = ByteBuffer.wrap(id);
+        long timestamp = buffer.getLong() >>> 16; // Top 48 bits
+
+        assertThat(timestamp).isBetween(before, after);
+    }
+
+    @Test
+    void shouldBeTimeOrdered() throws InterruptedException {
+        byte[] id1 = UuidV7Generator.generate();
+        Thread.sleep(2); // Ensure clock ticks
+        byte[] id2 = UuidV7Generator.generate();
+
+        ByteBuffer buffer1 = ByteBuffer.wrap(id1);
+        long timestamp1 = buffer1.getLong() >>> 16;
+
+        ByteBuffer buffer2 = ByteBuffer.wrap(id2);
+        long timestamp2 = buffer2.getLong() >>> 16;
+
+        assertThat(timestamp2).isGreaterThan(timestamp1);
+    }
+
+    @Test
+    void shouldBeUniqueWhenGeneratedInTheSameMillisecond() {
+        byte[] id1 = UuidV7Generator.generate();
+        byte[] id2 = UuidV7Generator.generate();
+        
+        assertThat(id1).isNotEqualTo(id2);
+    }
+
+    @Test
+    void shouldBeThreadSafeUnderConcurrentLoad() throws InterruptedException {
+        int threadCount = 100;
+        int idsPerThread = 1000;
+        ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
+        CountDownLatch latch = new CountDownLatch(threadCount);
+        Set<String> generatedIds = ConcurrentHashMap.newKeySet();
+
+        for (int i = 0; i < threadCount; i++) {
+            executorService.submit(() -> {
+                for (int j = 0; j < idsPerThread; j++) {
+                    byte[] id = UuidV7Generator.generate();
+                    StringBuilder sb = new StringBuilder();
+                    for (byte b : id) {
+                        sb.append(String.format("%02x", b));
+                    }
+                    generatedIds.add(sb.toString());
+                }
+                latch.countDown();
+            });
+        }
+
+        latch.await();
+        executorService.shutdown();
+
+        assertThat(generatedIds).hasSize(threadCount * idsPerThread);
+    }
+
+    @Test
+    void shouldGenerate32CharacterHexId() {
+        String idString = UuidV7Generator.generateAsString();
+        assertThat(idString).hasSize(32);
+        assertThat(idString).matches("^[0-9a-f]{32}$");
+    }
+}
+
+```
+
+
+## File: persistence-nosql-id-generator/src/test/java/com/developer/toolkit/nosql/idgenerator/UuidV7QueryUtilsTest.java
+```
+package com.developer.toolkit.nosql.idgenerator;
+
+import org.junit.jupiter.api.Test;
+
+import java.time.Instant;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class UuidV7QueryUtilsTest {
+
+    private static final long BUFFER_MILLIS = 5000;
+
+    @Test
+    void shouldExtractTimestampFromUuidV7String() {
+        long now = Instant.now().toEpochMilli();
+        String id = UuidV7Generator.generateAsString();
+        
+        long extracted = UuidV7QueryUtils.extractTimestamp(id);
+        
+        // Should be very close to 'now'
+        assertThat(extracted).isBetween(now - 100, now + 100);
+    }
+
+    @Test
+    void shouldCalculateSafeQueryTimestampWithBuffer() {
+        long timestamp = 1710410000000L; // Example timestamp
+        long expected = timestamp - BUFFER_MILLIS;
+        
+        long safe = UuidV7QueryUtils.getSafeQueryTimestamp(timestamp);
+        
+        assertThat(safe).isEqualTo(expected);
+    }
+
+    @Test
+    void shouldCreateSafeQueryIdForTimestamp() {
+        long timestamp = 1710410000000L;
+        long safeTimestamp = timestamp - BUFFER_MILLIS;
+        
+        // A safe query ID should have the safe timestamp and zeroed entropy
+        String safeId = UuidV7QueryUtils.generateSafeQueryId(timestamp);
+        
+        assertThat(safeId).hasSize(32);
+        assertThat(UuidV7QueryUtils.extractTimestamp(safeId)).isEqualTo(safeTimestamp);
+        
+        // Verify entropy is zeroed (bits after 48-51 version and 64-65 variant)
+        // This is a bit complex to check via string, but we can check if it's deterministic
+        String safeId2 = UuidV7QueryUtils.generateSafeQueryId(timestamp);
+        assertThat(safeId).isEqualTo(safeId2);
+    }
+
+    @Test
+    void shouldHandleNegativeBufferResultByReturningZero() {
+        long timestamp = 1000L; // 1 second
+        long safe = UuidV7QueryUtils.getSafeQueryTimestamp(timestamp);
+        assertThat(safe).isEqualTo(0L);
+    }
+}
+
+```
+
+
+## File: persistence-nosql-id-generator/src/main/java/com/developer/toolkit/nosql/idgenerator/Base16Codec.java
+```
+package com.developer.toolkit.nosql.idgenerator;
+
+public class Base16Codec {
+
+    private static final char[] HEX_ARRAY = "0123456789abcdef".toCharArray();
+
+    public static String encode(byte[] bytes) {
+        if (bytes == null || bytes.length == 0) {
+            return "";
+        }
+        char[] hexChars = new char[bytes.length * 2];
+        for (int j = 0; j < bytes.length; j++) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = HEX_ARRAY[v >>> 4];
+            hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
+        }
+        return new String(hexChars);
+    }
+
+    public static byte[] decode(String hex) {
+        if (hex == null || hex.isEmpty()) {
+            return new byte[0];
+        }
+        if (hex.length() % 2 != 0) {
+            throw new IllegalArgumentException("Hex string must have an even length");
+        }
+        
+        // Convert to lowercase to handle uppercase inputs consistently
+        hex = hex.toLowerCase();
+        
+        byte[] bytes = new byte[hex.length() / 2];
+        for (int i = 0; i < hex.length(); i += 2) {
+            int high = Character.digit(hex.charAt(i), 16);
+            int low = Character.digit(hex.charAt(i + 1), 16);
+            if (high == -1 || low == -1) {
+                throw new IllegalArgumentException("Invalid hexadecimal character found");
+            }
+            bytes[i / 2] = (byte) ((high << 4) + low);
+        }
+        return bytes;
+    }
+}
+
+```
+
+
+## File: persistence-nosql-id-generator/src/main/java/com/developer/toolkit/nosql/idgenerator/UuidV7Generator.java
+```
+package com.developer.toolkit.nosql.idgenerator;
+
+import java.nio.ByteBuffer;
+import java.security.SecureRandom;
+import java.time.Instant;
+
+public class UuidV7Generator {
+
+    private static final SecureRandom RANDOM = new SecureRandom();
+
+    public static byte[] generate() {
+        long timestamp = Instant.now().toEpochMilli();
+        byte[] entropy = new byte[10];
+        RANDOM.nextBytes(entropy);
+
+        ByteBuffer buffer = ByteBuffer.allocate(16);
+        
+        // Write 48-bit timestamp. A long is 64 bits. We take the lowest 48 bits.
+        buffer.putShort((short) (timestamp >>> 32));
+        buffer.putInt((int) (timestamp & 0xFFFFFFFFL));
+        
+        // Write 80-bit entropy
+        buffer.put(entropy);
+        
+        byte[] id = buffer.array();
+        
+        // Set Version 7 (0111) in bits 48-51
+        id[6] = (byte) ((id[6] & 0x0F) | 0x70);
+        
+        // Set Variant (10) in bits 64-65
+        id[8] = (byte) ((id[8] & 0x3F) | 0x80);
+
+        return id;
+    }
+
+    public static String generateAsString() {
+        return Base16Codec.encode(generate());
+    }
+}
+
+```
+
+
+## File: persistence-nosql-id-generator/src/main/java/com/developer/toolkit/nosql/idgenerator/UuidV7IdGeneratorCallback.java
+```
+package com.developer.toolkit.nosql.idgenerator;
+
+import org.bson.BsonBinarySubType;
+import org.bson.Document;
+import org.bson.types.Binary;
+import org.springframework.data.mapping.PersistentPropertyAccessor;
+import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
+import org.springframework.data.mongodb.core.mapping.MongoPersistentEntity;
+import org.springframework.data.mongodb.core.mapping.MongoPersistentProperty;
+import org.springframework.data.mongodb.core.mapping.event.BeforeConvertCallback;
+import org.springframework.data.mongodb.core.mapping.event.BeforeSaveCallback;
+import org.springframework.stereotype.Component;
+
+@Component
+public class UuidV7IdGeneratorCallback implements BeforeConvertCallback<Object>, BeforeSaveCallback<Object> {
+
+    private final MongoMappingContext mappingContext;
+
+    public UuidV7IdGeneratorCallback(MongoMappingContext mappingContext) {
+        this.mappingContext = mappingContext;
+    }
+
+    @Override
+    public Object onBeforeConvert(Object entity, String collection) {
+        MongoPersistentEntity<?> persistentEntity = mappingContext.getPersistentEntity(entity.getClass());
+        if (persistentEntity != null && persistentEntity.hasIdProperty()) {
+            MongoPersistentProperty idProperty = persistentEntity.getIdProperty();
+            if (idProperty != null && idProperty.getType().equals(String.class)) {
+                PersistentPropertyAccessor<Object> accessor = persistentEntity.getPropertyAccessor(entity);
+                Object id = accessor.getProperty(idProperty);
+                if (id == null || ((String) id).isEmpty()) {
+                    accessor.setProperty(idProperty, UuidV7Generator.generateAsString());
+                }
+            }
+        }
+        return entity;
+    }
+
+    @Override
+    public Object onBeforeSave(Object entity, Document document, String collection) {
+        if (document != null && document.containsKey("_id")) {
+            Object idObj = document.get("_id");
+            if (idObj instanceof String) {
+                String strId = (String) idObj;
+                if (strId.length() != 32 || !strId.matches("^[0-9a-fA-F]{32}$")) {
+                    throw new IllegalArgumentException("Invalid Hexadecimal UUIDv7 String");
+                }
+                document.put("_id", new Binary(BsonBinarySubType.UUID_STANDARD, Base16Codec.decode(strId)));
+            }
+        }
+        return entity;
+    }
+}
+
+```
+
+
+## File: persistence-nosql-id-generator/src/main/java/com/developer/toolkit/nosql/idgenerator/AutoIndexInitializer.java
+```
+package com.developer.toolkit.nosql.idgenerator;
+
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.index.IndexOperations;
+import org.springframework.data.mongodb.core.index.IndexResolver;
+import org.springframework.data.mongodb.core.index.MongoPersistentEntityIndexResolver;
+import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
+import org.springframework.data.mongodb.core.mapping.MongoPersistentEntity;
+import org.springframework.stereotype.Component;
+
+@Component
+public class AutoIndexInitializer {
+
+    private final MongoTemplate mongoTemplate;
+    private final MongoMappingContext mongoMappingContext;
+
+    public AutoIndexInitializer(MongoTemplate mongoTemplate, MongoMappingContext mongoMappingContext) {
+        this.mongoTemplate = mongoTemplate;
+        this.mongoMappingContext = mongoMappingContext;
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void initIndicesAfterStartup() {
+        IndexResolver resolver = new MongoPersistentEntityIndexResolver(mongoMappingContext);
+
+        for (MongoPersistentEntity<?> entity : mongoMappingContext.getPersistentEntities()) {
+            if (entity.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Document.class)) {
+                IndexOperations indexOps = mongoTemplate.indexOps(entity.getType());
+                resolver.resolveIndexFor(entity.getType()).forEach(indexOps::createIndex);
+            }
+        }
+    }
+}
+
+```
+
+
+## File: persistence-nosql-id-generator/src/main/java/com/developer/toolkit/nosql/idgenerator/UuidV7QueryUtils.java
+```
+package com.developer.toolkit.nosql.idgenerator;
+
+import java.nio.ByteBuffer;
+
+public class UuidV7QueryUtils {
+
+    private static final long BUFFER_MILLIS = 5000;
+
+    /**
+     * Extracts the millisecond timestamp from a 32-character hexadecimal UUIDv7 string.
+     */
+    public static long extractTimestamp(String uuidV7Hex) {
+        byte[] bytes = Base16Codec.decode(uuidV7Hex);
+        ByteBuffer buffer = ByteBuffer.wrap(bytes);
+        // Timestamp is the first 48 bits (6 bytes)
+        return buffer.getLong() >>> 16;
+    }
+
+    /**
+     * Returns a timestamp minus the safe query buffer (5 seconds).
+     */
+    public static long getSafeQueryTimestamp(long timestamp) {
+        return Math.max(0, timestamp - BUFFER_MILLIS);
+    }
+
+    /**
+     * Generates a deterministic UUIDv7-formatted string with a buffered timestamp and zeroed entropy.
+     * This is useful for range queries (e.g., 'find all records created since this ID').
+     */
+    public static String generateSafeQueryId(long originalTimestamp) {
+        long safeTimestamp = getSafeQueryTimestamp(originalTimestamp);
+        
+        ByteBuffer buffer = ByteBuffer.allocate(16);
+        
+        // Write 48-bit timestamp
+        buffer.putShort((short) (safeTimestamp >>> 32));
+        buffer.putInt((int) (safeTimestamp & 0xFFFFFFFFL));
+        
+        // Zero out entropy (10 bytes)
+        buffer.put(new byte[10]);
+        
+        byte[] id = buffer.array();
+        
+        // Set Version 7 (0111)
+        id[6] = (byte) ((id[6] & 0x0F) | 0x70);
+        
+        // Set Variant (10)
+        id[8] = (byte) ((id[8] & 0x3F) | 0x80);
+
+        return Base16Codec.encode(id);
+    }
+}
+
+```
+
+
+## File: persistence-nosql-id-generator/src/main/java/com/developer/toolkit/nosql/idgenerator/UuidV7WritingConverter.java
+```
+package com.developer.toolkit.nosql.idgenerator;
+
+import org.bson.BsonBinarySubType;
+import org.bson.types.Binary;
+import org.springframework.core.convert.TypeDescriptor;
+import org.springframework.core.convert.converter.GenericConverter;
+import org.springframework.data.convert.WritingConverter;
+import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+@Component
+@WritingConverter
+public class UuidV7WritingConverter implements GenericConverter {
+
+    @Override
+    public Set<ConvertiblePair> getConvertibleTypes() {
+        return new HashSet<>(Arrays.asList(
+                new ConvertiblePair(String.class, Binary.class),
+                new ConvertiblePair(String.class, String.class)
+        ));
+    }
+
+    @Override
+    public Object convert(Object source, TypeDescriptor sourceType, TypeDescriptor targetType) {
+        System.out.println("DEBUG: UuidV7WritingConverter convert called with source=" + source + " and targetType=" + targetType.getType().getName());
+        if (source == null) {
+            return null;
+        }
+        String str = (String) source;
+
+        // If Spring explicitly requests a Binary (e.g., during parameter binding for findById)
+        if (targetType.getType() == Binary.class) {
+            if (str.length() != 32 || !str.matches("^[0-9a-fA-F]{32}$")) {
+                throw new IllegalArgumentException("Invalid Hexadecimal UUIDv7 String");
+            }
+            return new Binary(BsonBinarySubType.UUID_STANDARD, Base16Codec.decode(str));
+        }
+
+        // For save operations, if it perfectly matches a 32-character hex string, convert it to BinData
+        if (str.length() == 32 && str.matches("^[0-9a-fA-F]{32}$")) {
+            return new Binary(BsonBinarySubType.UUID_STANDARD, Base16Codec.decode(str));
+        }
+
+        // Otherwise, safely return the original string for fields like 'name', 'description', etc.
+        return str;
+    }
+}
+
+```
+
+
+## File: persistence-nosql-id-generator/src/main/java/com/developer/toolkit/nosql/idgenerator/UuidV7ReadingConverter.java
+```
+package com.developer.toolkit.nosql.idgenerator;
+
+import org.bson.BsonBinarySubType;
+import org.bson.types.Binary;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.convert.ReadingConverter;
+import org.springframework.stereotype.Component;
+
+@Component
+@ReadingConverter
+public class UuidV7ReadingConverter implements Converter<Binary, String> {
+    @Override
+    public String convert(Binary source) {
+        if (source.getType() == BsonBinarySubType.UUID_STANDARD.getValue()) {
+            return Base16Codec.encode(source.getData());
+        }
+        return new String(source.getData()); // Fallback
+    }
+}
+
+```
+
+
+## File: persistence-nosql-id-generator/build.gradle.kts
+```
+plugins {
+    java
+    id("org.springframework.boot") apply false
+    id("io.spring.dependency-management")
+}
+
+dependencies {
+    implementation(libs.spring.boot.starter.data.mongodb)
+    implementation(libs.spring.boot.starter.web)
+
+    testImplementation(libs.testcontainers.junit.jupiter)
+    testImplementation(libs.testcontainers.mongodb)
+    testImplementation(libs.assertj.core)
+    testImplementation(libs.archunit.junit5)
+}
+
+```
+
+
+## File: persistence-nosql-id-generator/README.md
+```
+# persistence-nosql-id-generator
+
+> A high-performance Java library for Spring Data MongoDB providing time-ordered UUIDv7 generation, BSON binary storage conversion, and automated index management.
+
+## Documentation
+* [SQL and NoSQL Architectural Comparison](../docs/sql-nosql-db/sql_and_nosql_architectural_comparison.md)
+
+## Tech Stack
+*   Java 21
+*   Spring Boot 3.5.x
+*   Spring Data MongoDB
+*   MongoDB 8+ (Driver managed by Spring Boot)
+*   Gradle 9.x.x
+*   Testcontainers 1.21.4
+*   ArchUnit 1.3.0
+
+## Prerequisites
+*   Java 21
+*   Docker 24.0+ (Required for integration tests via Testcontainers)
+
+## Getting Started
+
+### Build
+```bash
+./gradlew :persistence-nosql-id-generator:build
+```
+### Test
+```bash
+./gradlew :persistence-nosql-id-generator:test
+```
+
+## Features & Components
+| Component | Description |
+| :--- | :--- |
+| `UuidV7Generator` | Core engine for generating 128-bit UUIDv7 identifiers. |
+| `UuidV7WritingConverter` | Converts Java Strings to MongoDB Binary types. |
+| `UuidV7ReadingConverter` | Converts MongoDB Binary types to Java Strings. |
+| `UuidV7IdGeneratorCallback` | Automatically assigns and validates identifiers before they reach the database layer. |
+| `AutoIndexInitializer` | Discovers and applies Spring Data MongoDB index annotations at application startup. |
+| `UuidV7QueryUtils` | Extracts timestamps from IDs and generates range query boundaries with a configurable buffer. |
+
+## Usage Configuration
+Add the following to your `build.gradle.kts`:
+```kotlin
+implementation(project(":persistence-nosql-id-generator"))
+```
+Annotate your `@Id` field with `@Field(targetType = FieldType.BINARY)` to activate optimal storage:
+```java
+@Document(collection = "products")
+public class Product {
+    @Id
+    @Field(targetType = FieldType.BINARY)
+    private String id;
+}
+```
+
+## Testing
+
+| Name of Method | Name of Class | Type | Description |
+| :--- | :--- | :--- | :--- |
+| `shouldGenerate16ByteId` | `UuidV7GeneratorTest` | Unit | Verifies UUIDv7 generator produces a 16-byte array. |
+| `shouldContainCurrentTimestampInFirst48Bits` | `UuidV7GeneratorTest` | Unit | Validates the timestamp partition of the UUIDv7 generator. |
+| `shouldBeTimeOrdered` | `UuidV7GeneratorTest` | Unit | Validates that generated IDs are strictly time-ordered. |
+| `shouldGenerate32CharacterHexId` | `UuidV7GeneratorTest` | Unit | Validates Base16 encoded string representation. |
+| `shouldEncodeBytesToHex` | `Base16CodecTest` | Unit | Tests Base16 encoding. |
+| `shouldDecodeHexToBytes` | `Base16CodecTest` | Unit | Tests Base16 decoding. |
+| `shouldExtractTimestampFromUuidV7String` | `UuidV7QueryUtilsTest` | Unit | Verifies timestamp extraction from UUIDv7 hex string. |
+| `shouldCalculateSafeQueryTimestampWithBuffer` | `UuidV7QueryUtilsTest` | Unit | Tests safe query timestamp calculation. |
+| `shouldCreateSafeQueryIdForTimestamp` | `UuidV7QueryUtilsTest` | Unit | Verifies generation of safe query IDs. |
+| `repository_methods_should_have_hardened_signatures` | `SecurityArchUnitTest` | Architecture | Enforces repository methods have specific return types. |
+| `controller_methods_should_not_expose_raw_id_in_path_variables` | `SecurityArchUnitTest` | Architecture | Prevents raw String IDs in PathVariables (IDOR protection). |
+| `dtos_should_not_expose_raw_id_field` | `SecurityArchUnitTest` | Architecture | Prevents DTOs from exposing raw 'id' fields. |
+| `shouldGenerateIdOnSaveAndStoreAsBinData` | `UuidV7IntegrationTest` | Integration | Verifies ID generation and BinData storage conversion on save. |
+| `shouldRespectManuallySetValidId` | `UuidV7IntegrationTest` | Integration | Validates that manually set valid UUIDv7 IDs are preserved. |
+| `shouldThrowExceptionWhenSavingWithInvalidHexLength` | `UuidV7IntegrationTest` | Integration | Ensures validation exception is thrown for invalid ID lengths. |
+| `shouldThrowExceptionWhenSavingWithInvalidHexCharacters` | `UuidV7IntegrationTest` | Integration | Ensures validation exception is thrown for invalid ID characters. |
+| `shouldAutomaticallyApplyIndexesOnStartup` | `AutoIndexIntegrationTest` | Integration | Validates automatic discovery and application of index annotations. |
+
+## Constraints
+*   Requires a running Docker daemon to execute the integration test suite (Testcontainers).
+
+```
