@@ -5,11 +5,14 @@
 ## 🚀 Features
 
 - **Comparative Architecture:** Side-by-side implementation of a Product Catalog using Relational (SQL) and Document (NoSQL) storage.
-- **Modern Tech Stack:** Built with Java 21, Spring Boot 3.5.x, and Gradle 9.x.x.
-- **Database Migrations:** Managed schema changes using Liquibase (SQL) and Mongock (NoSQL).
-- **Advanced Testing:** Comprehensive integration test suite utilizing Testcontainers for isolated, containerized database instances.
-- **API Layer:** RESTful APIs with Jakarta Bean Validation for consistent data integrity.
-- **Monorepo Structure:** Cleanly separated modules for SQL and NoSQL persistence layers.
+- **Modern Tech Stack:** Built with Java 21 (Records, Pattern Matching), Spring Boot 3.5.x, and Gradle 9.x.x.
+- **Optimized NoSQL Identifiers:** Custom UUIDv7 generator for time-ordered, high-performance IDs stored as efficient BSON `BinData`.
+- **Database Migrations:** Managed schema and data changes using Liquibase (SQL) and Mongock (NoSQL).
+- **Automated Indexing:** Startup-time index discovery and application for MongoDB based on entity annotations.
+- **Advanced Testing:** 
+  - **Integration:** Comprehensive suite utilizing **Testcontainers** for isolated, containerized database instances (PostgreSQL 18+, MongoDB 8+).
+  - **Architecture:** **ArchUnit** rules to enforce "Hardened Signatures" and IDOR protection at the application level.
+- **Monorepo Structure:** Cleanly separated modules for persistence, utilities, and infrastructure.
 
 ## 🛠 Tech Stack
 
@@ -18,8 +21,8 @@
 - **Build Tool:** Gradle 9.x.x (Kotlin DSL)
 - **Databases:** PostgreSQL 18+, MongoDB 8+
 - **Migrations:** Liquibase, Mongock
-- **Testing:** JUnit 5, AssertJ, Testcontainers
-- **Utilities:** Lombok
+- **Testing:** JUnit 5, AssertJ, Testcontainers, ArchUnit
+- **Utilities:** Lombok, UUIDv7
 
 ## 📦 Modules
 
@@ -28,7 +31,10 @@
   - **Functionality**: Normalized storage for products, categories, and suppliers with complex join support.
 - **[persistence-nosql](./persistence-nosql)**: Implementation of a product catalog service using MongoDB.
   - **Key Technologies**: Spring Data MongoDB, Mongock.
-  - **Functionality**: Document-oriented storage with nested attributes and dynamic filtering support.
+  - **Functionality**: Document-oriented storage with nested attributes, dynamic filtering, and UUIDv7 integration.
+- **[persistence-nosql-id-generator](./persistence-nosql-id-generator)**: High-performance library for MongoDB ID and index management.
+  - **Key Technologies**: Spring Data MongoDB, BSON, ArchUnit.
+  - **Functionality**: UUIDv7 generation, Hex-to-Binary converters, and automated index initialization.
 
 ## 📚 Documentation
 
@@ -38,7 +44,8 @@ The `docs/sql-nosql-db` folder contains various materials comparing SQL and NoSQ
 | :--- | :--- | :--- |
 | `database_comparison_ guide.png` | Image | Visual guide comparing database architectures |
 | `intro_to_databases_slide_deck.pptx` | Presentation | Introductory slide deck on databases |
-| `postgres_18_mongoDB_8_and_testcontainers.m4a` | Audio | Audio discussion on Postgres 18, MongoDB 8, and Testcontainers |
+| `sql_vs_nosql_video.mp4` | Video | Visual introduction to database concepts |
+| `sql_vs_nosql_podcast.m4a` | Audio | Audio discussion on Postgres, MongoDB, and Testcontainers |
 | `sql_and_nosql_architectural_comparison.md` | Markdown Document | Detailed architectural comparison of SQL and NoSQL databases |
 
 ## 💻 Installation
@@ -81,7 +88,7 @@ To execute the full test suite (requires Docker):
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please open an issue or submit a PR for any improvements or bug fixes.
+Contributions are welcome! Please follow the TDD workflow defined in `conductor/workflow.md` and use conventional commits.
 
 ## 📜 License
 
