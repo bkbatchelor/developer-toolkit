@@ -1,6 +1,6 @@
 [versions]
 java = "21"
-spring-boot = "3.5.11"
+spring-boot = "4.0.4"
 spring-dependency-management = "1.1.7"
 lombok = "1.18.36"
 junit-jupiter = "5.11.4"
